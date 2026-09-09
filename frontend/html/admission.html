@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Submit an online admission application to Master Computer Institute." />
+    <title>Admission | Master Computer Institute</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+  </head>
+  <body>
+    <div class="topbar"><div class="container topbar-inner"><div>Admissions Open for 2026 Batch</div><div class="topbar-links"><a href="tel:+919000000001"><i class="bi bi-telephone"></i> +91 90000 00001</a><a href="mailto:branch1@example.com"><i class="bi bi-envelope"></i> branch1@example.com</a></div></div></div>
+    <header class="navbar"><div class="container navbar-inner"><a class="nav-logo" href="index.html"><span class="nav-logo-mark"><img src="assets/logos/mci-logo.svg" alt="Master Computer Institute Logo" /></span><span class="nav-logo-text">MASTER<br />COMPUTER<br />INSTITUTE</span></a><nav aria-label="Main navigation"><ul class="nav-menu"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="courses.html">Courses</a></li><li><a href="branches.html">Branches</a></li><li><a class="active" href="admission.html">Admissions</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="certificate-verification.html">Certificate Verification</a></li><li><a href="contact.html">Contact</a></li></ul></nav><div class="nav-actions"><a href="login.html" class="btn btn-outline">Student Login</a><a href="admission.html" class="btn btn-primary">Apply Now</a></div><button class="mobile-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"><i class="bi bi-list"></i></button></div></header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <div class="breadcrumbs"><a href="index.html">Home</a> / <span>Admissions</span></div>
+          <h1>Online Admission</h1>
+          <p>Begin your journey with a simple, secure and guided admission process.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="form-shell reveal" style="max-width: 980px; margin: 0 auto;">
+            <form data-validate="true" data-success-message="Application submitted successfully. Your application ID is: MCI-XXXXXX" novalidate>
+              <div class="form-grid">
+                <div class="form-field"><label for="fullName">Full Name</label><input id="fullName" name="fullName" type="text" required placeholder="Enter your full name" /></div>
+                <div class="form-field"><label for="dob">Date of Birth</label><input id="dob" name="dob" type="date" required /></div>
+                <div class="form-field"><label for="gender">Gender</label><select id="gender" name="gender" required><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+                <div class="form-field"><label for="mobile">Mobile Number</label><input id="mobile" name="mobile" type="tel" required placeholder="+91 98765 43210" /></div>
+                <div class="form-field"><label for="email">Email</label><input id="email" name="email" type="email" required placeholder="name@example.com" /></div>
+                <div class="form-field"><label for="city">City</label><input id="city" name="city" type="text" required placeholder="Your city" /></div>
+                <div class="form-field full"><label for="address">Address</label><textarea id="address" name="address" rows="4" required placeholder="Enter your address"></textarea></div>
+                <div class="form-field"><label for="course">Course</label><select id="course" name="course" required><option value="">Select course</option><option>Computer Fundamentals</option><option>Advanced Excel</option><option>Web Development</option><option>Java Programming</option><option>Python Programming</option><option>Tally + GST</option><option>Graphic Designing</option><option>Digital Marketing</option></select></div>
+                <div class="form-field"><label for="branch">Branch</label><select id="branch" name="branch" required><option value="">Select branch</option><option>Branch 1</option><option>Branch 2</option></select></div>
+                <div class="form-field"><label for="qualification">Education Qualification</label><input id="qualification" name="qualification" type="text" required placeholder="e.g. 12th / Graduate" /></div>
+                <div class="form-field"><label for="batch">Preferred Batch</label><select id="batch" name="batch" required><option value="">Select</option><option>Morning</option><option>Evening</option><option>Weekend</option></select></div>
+                <div class="form-field full"><label for="message">Message</label><textarea id="message" name="message" rows="4" placeholder="Tell us about your interest or goals"></textarea></div>
+              </div>
+              <div class="form-actions"><button type="submit" class="btn btn-primary">Submit Application</button><button type="reset" class="btn btn-outline">Reset</button></div>
+              <div class="form-message" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="container footer-grid"><div><div class="footer-brand" style="display:flex; align-items:center; gap:14px; margin-bottom:18px;"><img src="assets/logos/mci-logo.svg" alt="Master Computer Institute Logo" /><h4>Master Computer Institute</h4></div><p>Professional computer education and skill development.</p></div><div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="courses.html">Courses</a></li><li><a href="admission.html">Admissions</a></li><li><a href="branches.html">Branches</a></li><li><a href="contact.html">Contact</a></li></ul></div><div><h4>Student</h4><ul><li><a href="login.html">Student Login</a></li><li><a href="certificate-verification.html">Certificate Verification</a></li></ul></div><div><h4>Branches</h4><ul><li><a href="branches.html">Branch 1</a></li><li><a href="branches.html">Branch 2</a></li></ul></div></div><div class="container footer-bottom"><div>© 2026 Master Computer Institute. All Rights Reserved.</div><div>Director: Sahil Pandey</div><div class="socials"><a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a><a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a><a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a><a href="#" aria-label="X"><i class="bi bi-twitter-x"></i></a></div></div></footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/animations.js"></script>
+  </body>
+</html>
