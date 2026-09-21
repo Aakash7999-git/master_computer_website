@@ -1,0 +1,10 @@
+﻿# Master Computer Institute - robots.txt
+User-agent: *
+Allow: /
+Disallow: /login.html
+Disallow: /admin-login.html
+Disallow: /backend/
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://mastercomputerinstitute.in/sitemap.xml

@@ -1,0 +1,16 @@
+﻿{
+  name: Master Computer Institute,
+  short_name: Master Computer,
+  description: Professional computer education, IT training, and skill certifications in Nawabganj, UP.,
+  start_url: /index.html,
+  display: standalone,
+  background_color: #0a192f,
+  theme_color: #1e3a8a,
+  icons: [
+    {
+      src: assets/logos/mci-logo.svg,
+      sizes: 192x192 512x512,
+      type: image/svg+xml
+    }
+  ]
+}
