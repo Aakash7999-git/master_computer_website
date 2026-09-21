@@ -1,44 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="description" content="Admin login portal for Master Computer Institute management." />
-    <title>Admin Login | Master Computer Institute</title>
-    <link rel="icon" href="../assets/logos/mci-logo.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#1e3a8a" />
-    <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css" />
-    <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/responsive.css" />
-    <link rel="stylesheet" href="../css/animations.css" />
-  </head>
-  <body>
-    <div class="topbar"><div class="container topbar-inner"><div>Master Computer Institute • Nawabganj, Uttar Pradesh (271303)</div><div class="topbar-links"><a href="https://www.instagram.com/master.computer1/" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i> @master.computer1</a><a href="https://mastercomputerinstitute.blogspot.com" target="_blank" rel="noopener noreferrer"><i class="bi bi-globe"></i> Official Blog</a></div></div></div>
-    <header class="navbar"><div class="container navbar-inner"><a class="nav-logo" href="index.html" aria-label="Master Computer Institute home"><span class="nav-logo-mark"><img src="../assets/logos/mci-logo.svg" alt="Master Computer Institute Logo" /></span><span class="nav-logo-text">MASTER<br />COMPUTER<br />INSTITUTE</span></a><nav aria-label="Main navigation"><ul class="nav-menu"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="courses.html">Courses</a></li><li><a href="branches.html">Branches</a></li><li><a href="admission.html">Admissions</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="certificate-verification.html">Certificate Verification</a></li><li><a href="contact.html">Contact</a></li></ul></nav><div class="nav-actions"><a href="login.html" class="btn btn-outline">Student Login</a><a href="admission.html" class="btn btn-primary">Apply Now</a></div><button class="mobile-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"><i class="bi bi-list"></i></button></div></header>
 
-    <main>
-      <section class="section">
-        <div class="container">
-          <div class="admin-shell reveal">
-            <h1 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 20px; color: var(--text-dark, #0f172a);">Admin Login</h1>
-            <form data-validate="true" data-success-message="Admin login successful." novalidate>
-              <div class="form-grid" style="grid-template-columns: 1fr;">
-                <div class="form-field"><label for="adminUser">Email / Username</label><input id="adminUser" name="adminUser" type="text" required placeholder="Enter email or username" /></div>
-                <div class="form-field"><label for="adminPassword">Password</label><input id="adminPassword" name="adminPassword" type="password" required placeholder="Enter password" /></div>
-              </div>
-              <div class="form-actions"><button type="submit" class="btn btn-primary">Login</button></div>
-              <div class="form-message" aria-live="polite"></div>
-            </form>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Admin login for Master Computer Institute dashboard." />
+  <title>Admin Login | Master Computer Institute</title>
+  <link rel="stylesheet" href="../assets/vendor/bootstrap-icons/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/animations.css" />
+  <script src="../js/main.js"></script>
+  <script src="../js/validation.js"></script>
+  <script src="../js/animations.js"></script>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div>Master Computer Institute • Nawabganj, Uttar Pradesh (271303)</div>
+      <div class="topbar-links"><a href="https://www.instagram.com/master.computer1/" target="_blank"
+          rel="noopener noreferrer"><i class="bi bi-instagram"></i> @master.computer1</a><a
+          href="https://mastercomputerinstitute.blogspot.com" target="_blank" rel="noopener noreferrer"><i
+            class="bi bi-globe"></i> Official Blog</a></div>
+    </div>
+  </div>
+  <header class="navbar">
+    <div class="container navbar-inner"><a class="nav-logo" href="index.html"><span class="nav-logo-mark"><img
+            src="../assets/logos/mci-logo.svg" alt="Master Computer Institute Logo" /></span><span
+          class="nav-logo-text">MASTER<br />COMPUTER<br />INSTITUTE</span></a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="branches.html">Branches</a></li>
+          <li><a href="admission.html">Admissions</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="certificate-verification.html">Certificate Verification</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions"><a href="login.html" class="btn btn-outline">Student Login</a><a href="admission.html"
+          class="btn btn-primary">Apply Now</a></div><button class="mobile-toggle" type="button"
+        aria-label="Toggle navigation" aria-expanded="false"><i class="bi bi-list"></i></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="admin-shell reveal">
+          <h3>Admin Login</h3>
+          <form data-validate="true" data-success-message="Admin login successful." novalidate>
+            <div class="form-grid" style="grid-template-columns: 1fr;">
+              <div class="form-field"><label for="adminUser">Email / Username</label><input id="adminUser"
+                  name="adminUser" type="text" required placeholder="Enter email or username" /></div>
+              <div class="form-field"><label for="adminPassword">Password</label><input id="adminPassword"
+                  name="adminPassword" type="password" required placeholder="Enter password" /></div>
+            </div>
+            <div class="form-actions"><button type="submit" class="btn btn-primary">Login</button></div>
+            <div class="form-message" aria-live="polite"></div>
+          </form>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+  </main>
 
-    <footer class="footer"><div class="container footer-grid"><div><div class="footer-brand" style="display:flex; align-items:center; gap:14px; margin-bottom:18px;"><img src="../assets/logos/mci-logo.svg" alt="Master Computer Institute Logo" /><h4>Master Computer Institute</h4></div><p>Professional computer education and skill development.</p></div><div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="courses.html">Courses</a></li><li><a href="admission.html">Admissions</a></li><li><a href="branches.html">Branches</a></li><li><a href="contact.html">Contact</a></li></ul></div><div><h4>Student</h4><ul><li><a href="login.html">Student Login</a></li><li><a href="certificate-verification.html">Certificate Verification</a></li></ul></div><div><h4>Location</h4><ul><li><a href="branches.html">Nawabganj Center</a></li><li><a href="contact.html">Contact Us</a></li></ul></div></div><div class="container footer-bottom"><div>© 2026 Master Computer Institute. All Rights Reserved.</div><div>Director: Shivam Pandey</div><div class="socials"><a href="https://www.instagram.com/master.computer1/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram"></i></a><a href="https://mastercomputerinstitute.blogspot.com" target="_blank" rel="noopener noreferrer" aria-label="Official Blog"><i class="bi bi-globe"></i></a></div></div></footer>
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-brand" style="display:flex; align-items:center; gap:14px; margin-bottom:18px;"><img
+            src="../assets/logos/mci-logo.svg" alt="Master Computer Institute Logo" />
+          <h4>Master Computer Institute</h4>
+        </div>
+        <p>Professional computer education and skill development.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="admission.html">Admissions</a></li>
+          <li><a href="branches.html">Branches</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Student</h4>
+        <ul>
+          <li><a href="login.html">Student Login</a></li>
+          <li><a href="certificate-verification.html">Certificate Verification</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Location</h4>
+        <ul>
+          <li><a href="branches.html">Nawabganj Center</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <div>© 2026 Master Computer Institute. All Rights Reserved.</div>
+      <div>Director: Shivam Pandey</div>
+      <div class="socials"><a href="https://www.instagram.com/master.computer1/" target="_blank"
+          rel="noopener noreferrer" aria-label="Instagram"><i class="bi bi-instagram"></i></a><a
+          href="https://mastercomputerinstitute.blogspot.com" target="_blank" rel="noopener noreferrer"
+          aria-label="Official Blog"><i class="bi bi-globe"></i></a></div>
+    </div>
+  </footer>
 
-    <script src="../js/main.js"></script>
-    <script src="../js/validation.js"></script>
-    <script src="../js/animations.js"></script>
-  </body>
+</body>
+
 </html>
