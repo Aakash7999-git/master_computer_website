@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 190" role="img" aria-labelledby="title desc">
+  <title id="title">Floating holographic code panel</title>
+  <desc id="desc">A translucent blue technology panel with abstract code lines and connected data points.</desc>
+  <defs><linearGradient id="glass" x2="1" y2="1"><stop stop-color="#7eefff" stop-opacity=".35"/><stop offset="1" stop-color="#756dff" stop-opacity=".2"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <rect x="3" y="3" width="254" height="184" rx="16" fill="url(#glass)" stroke="#82efff" stroke-opacity=".75" stroke-width="2" filter="url(#glow)"/>
+  <circle cx="22" cy="25" r="4" fill="#73f4ff"/><circle cx="36" cy="25" r="4" fill="#a47dff"/><circle cx="50" cy="25" r="4" fill="#e5fdff" opacity=".7"/>
+  <path d="M22 60h78M22 80h53M22 100h91M22 140h55M22 158h90" stroke="#75efff" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+  <path d="M145 61h75M145 82h58M145 103h82M145 140h46M145 160h70" stroke="#aa82ff" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+  <path d="M118 45v115" stroke="#76eaff" stroke-opacity=".35" stroke-dasharray="4 8"/>
+  <circle cx="170" cy="126" r="7" fill="#82f5ff"/><circle cx="205" cy="126" r="5" fill="#a77cff"/><path d="M170 126h35" stroke="#78efff" stroke-width="2" opacity=".8"/>
+</svg>

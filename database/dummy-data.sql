@@ -2,8 +2,7 @@ USE master_computer_institute;
 
 INSERT INTO branches (branch_code, branch_name, address, city, state, pincode, phone, email, opening_time, closing_time, status)
 VALUES
-('MCI-BR01', 'Master Computer Institute - Branch 1', 'Dummy Address, Mumbai', 'Mumbai', 'Maharashtra', '400001', '+91 90000 00001', 'branch1@example.com', '09:00:00', '19:00:00', 'ACTIVE'),
-('MCI-BR02', 'Master Computer Institute - Branch 2', 'Dummy Address, Mumbai', 'Mumbai', 'Maharashtra', '400002', '+91 90000 00002', 'branch2@example.com', '09:00:00', '19:00:00', 'ACTIVE');
+('MCI-NW01', 'Master Computer Institute - Nawabganj Center', 'Center near Tripathi Hospital, Nawabganj', 'Nawabganj', 'Uttar Pradesh', '271303', NULL, NULL, '09:00:00', '19:00:00', 'ACTIVE');
 
 INSERT INTO courses (course_code, course_name, description, duration, eligibility, fees, certificate_available, status)
 VALUES
@@ -21,17 +20,17 @@ SELECT c.id, b.id, 'ACTIVE' FROM courses c, branches b;
 
 INSERT INTO admins (username, email, password_hash, full_name, role, status)
 VALUES
-('demo.admin', 'demo.admin@example.com', '$2a$10$7Z3Q5m2u2Z4ZgL09S5U0X.G9WQm3s8DqH3KcQxF2sYzQ2YH0xG9G2', 'Demo Admin', 'ADMIN', 'ACTIVE');
+('demo.admin', 'admin@mastercomputer.local', '$2a$10$7Z3Q5m2u2Z4ZgL09S5U0X.G9WQm3s8DqH3KcQxF2sYzQ2YH0xG9G2', 'Director Shivam Pandey', 'ADMIN', 'ACTIVE');
 
 INSERT INTO students (student_id, full_name, dob, gender, mobile, email, address, city, qualification, course_id, branch_id, admission_date, password_hash, status)
 VALUES
-('MCI-STU-1001', 'Demo Student 01', '2002-05-15', 'Female', '+91 98765 43210', 'demo.student1@example.com', 'Dummy Address 1, Mumbai', 'Mumbai', '12th', 3, 1, '2026-01-15', '$2a$10$7Z3Q5m2u2Z4ZgL09S5U0X.G9WQm3s8DqH3KcQxF2sYzQ2YH0xG9G2', 'ACTIVE'),
-('MCI-STU-1002', 'Demo Student 02', '2001-08-20', 'Male', '+91 98765 43211', 'demo.student2@example.com', 'Dummy Address 2, Mumbai', 'Mumbai', 'Graduate', 5, 2, '2026-02-10', '$2a$10$7Z3Q5m2u2Z4ZgL09S5U0X.G9WQm3s8DqH3KcQxF2sYzQ2YH0xG9G2', 'ACTIVE');
+('MCI-STU-1001', 'Student Record 01', '2002-05-15', 'Female', '+91 98765 43210', 'student1@mastercomputer.local', 'Nawabganj', 'Nawabganj', '12th', 3, 1, '2026-01-15', '$2a$10$7Z3Q5m2u2Z4ZgL09S5U0X.G9WQm3s8DqH3KcQxF2sYzQ2YH0xG9G2', 'ACTIVE'),
+('MCI-STU-1002', 'Student Record 02', '2001-08-20', 'Male', '+91 98765 43211', 'student2@mastercomputer.local', 'Nawabganj', 'Nawabganj', 'Graduate', 5, 1, '2026-02-10', '$2a$10$7Z3Q5m2u2Z4ZgL09S5U0X.G9WQm3s8DqH3KcQxF2sYzQ2YH0xG9G2', 'ACTIVE');
 
 INSERT INTO admissions (application_id, full_name, dob, gender, mobile, email, address, course_id, branch_id, qualification, preferred_batch, message, status)
 VALUES
-('MCI-APP-000001', 'Demo Applicant 01', '2003-04-18', 'Female', '+91 90909 11111', 'applicant1@example.com', 'Dummy Street 1, Mumbai', 1, 1, '10th', 'Morning', 'Interested in beginner course.', 'PENDING'),
-('MCI-APP-000002', 'Demo Applicant 02', '2000-11-25', 'Male', '+91 90909 11112', 'applicant2@example.com', 'Dummy Street 2, Mumbai', 2, 2, '12th', 'Evening', 'Interested in Excel course.', 'APPROVED');
+('MCI-APP-000001', 'Applicant 01', '2003-04-18', 'Female', '+91 90909 11111', 'applicant1@mastercomputer.local', 'Nawabganj', 1, 1, '10th', 'Morning', 'Interested in beginner course.', 'PENDING'),
+('MCI-APP-000002', 'Applicant 02', '2000-11-25', 'Male', '+91 90909 11112', 'applicant2@mastercomputer.local', 'Nawabganj', 2, 1, '12th', 'Evening', 'Interested in Excel course.', 'APPROVED');
 
 INSERT INTO certificates (certificate_number, student_id, course_id, branch_id, issue_date, status)
 VALUES

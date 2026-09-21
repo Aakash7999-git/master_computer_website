@@ -1,15 +1,18 @@
 # Master Computer Institute
 
 ## Project Overview
-This project is a complete multi-branch computer institute website and management system for Master Computer Institute. The frontend is built as a professional static site with responsive design and dummy content placeholders, while the project is structured for future Java/JSP/MySQL backend integration.
+This project is the official website and institute management interface for **Master Computer Institute**, located in Nawabganj, Uttar Pradesh (PIN 271303), India, under the direction of **Shivam Pandey**.
+
+- Instagram: [@master.computer1](https://www.instagram.com/master.computer1/)
+- Official Blog: [mastercomputerinstitute.blogspot.com](https://mastercomputerinstitute.blogspot.com)
 
 ## Features
 - Responsive landing page and multi-page frontend
-- About, courses, branches, admissions, gallery, contact, and verification pages
+- About, courses, center location, admissions, gallery, contact, and verification pages
 - Student and admin login UI screens
-- Course and branch detail layout
+- Course and center detail layouts
 - Form validation and UI animations
-- Professional educational branding using navy/blue/orange styling
+- Professional educational branding aligned with Master Computer Institute
 - Prepared layout for future backend integration and database development
 
 ## Technology Stack

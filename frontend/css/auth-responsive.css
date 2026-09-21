@@ -1,0 +1,123 @@
+@media (max-width: 980px) {
+  .auth-shell {
+    width: min(600px, 84vw);
+    padding: 24px;
+  }
+
+  .auth-card {
+    width: min(390px, calc(100% - 80px));
+  }
+
+  .auth-shell:has(#registerForm.active) {
+    width: min(600px, 92vw);
+    min-height: min(600px, 92vw);
+  }
+}
+
+@media (max-width: 640px) {
+  .auth-body {
+    padding: 20px 12px;
+  }
+
+  .auth-shell {
+    width: min(350px, 92vw);
+    padding: 12px;
+  }
+
+  .auth-shell:has(#registerForm.active) {
+    width: min(430px, calc(100vw - 24px));
+    min-height: 0;
+    padding: 18px 14px;
+    border-radius: 50%;
+  }
+
+  .auth-card {
+    width: calc(100% - 18px);
+  }
+
+  .auth-shell:has(#registerForm.active) .auth-card {
+    width: 100%;
+  }
+
+  .auth-header h2 {
+    font-size: 2.1rem;
+  }
+
+  .auth-shell:has(#registerForm.active) .auth-header h2 {
+    font-size: 1.9rem;
+  }
+
+  .auth-forms {
+    min-height: 300px;
+  }
+
+  .auth-shell:has(#registerForm.active) .auth-forms {
+    min-height: 0;
+  }
+
+  .auth-shell:has(#registerForm.active) .field label {
+    font-size: 0.74rem;
+  }
+
+  .auth-shell:has(#registerForm.active) .field input,
+  .auth-shell:has(#registerForm.active) .field select,
+  .auth-shell:has(#registerForm.active) .auth-btn {
+    height: 40px;
+    font-size: 0.86rem;
+  }
+
+  .auth-shell:has(#registerForm.active) .field input,
+  .auth-shell:has(#registerForm.active) .field select {
+    padding: 0 12px;
+  }
+
+  .auth-shell:has(#registerForm.active) .compact-register-grid {
+    gap: 7px;
+  }
+
+  .auth-shell:has(#registerForm.active) .auth-footer {
+    font-size: 0.82rem;
+  }
+
+  .auth-shell:has(#registerForm.active) .small-link {
+    font-size: 0.76rem;
+  }
+
+
+@media (max-width: 360px) {
+  .auth-shell:has(#registerForm.active) {
+    padding: 14px 10px;
+  }
+
+  .auth-shell:has(#registerForm.active) .auth-brand {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 5px;
+  }
+
+  .auth-shell:has(#registerForm.active) .auth-header h2 {
+    font-size: 1.7rem;
+  }
+
+  .auth-shell:has(#registerForm.active) .auth-header p {
+    font-size: 0.82rem;
+  }
+
+  .auth-shell:has(#registerForm.active) .role-switch {
+    margin: 7px 0;
+  }
+
+  .auth-shell:has(#registerForm.active) .role-option {
+    padding: 7px 8px;
+    font-size: 0.82rem;
+  }
+}
+  .field input,
+  .field select {
+    height: 46px;
+  }
+
+  .auth-btn {
+    height: 46px;
+  }
+}
