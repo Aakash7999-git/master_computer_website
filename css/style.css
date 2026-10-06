@@ -1440,7 +1440,7 @@ textarea {
 .whatsapp-float {
   position: fixed;
   right: max(20px, env(safe-area-inset-right));
-  bottom: max(20px, env(safe-area-inset-bottom));
+  bottom: max(78px, env(safe-area-inset-bottom));
   z-index: 1100;
   display: inline-flex;
   align-items: center;
