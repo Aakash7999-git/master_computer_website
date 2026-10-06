@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
+  if (!document.querySelector('.whatsapp-float')) {
+    const whatsappLink = document.createElement('a');
+    whatsappLink.className = 'whatsapp-float';
+    whatsappLink.href = 'https://wa.me/919696525287?text=Hello%2C%20I%20want%20to%20know%20more%20about%20Master%20Computer%20Institute%20courses.';
+    whatsappLink.target = '_blank';
+    whatsappLink.rel = 'noopener noreferrer';
+    whatsappLink.setAttribute('aria-label', 'Chat with Master Computer Institute on WhatsApp');
+    whatsappLink.title = 'Chat with us on WhatsApp';
+    whatsappLink.innerHTML = '<i class="bi bi-whatsapp" aria-hidden="true"></i><span>Chat on WhatsApp</span>';
+    document.body.appendChild(whatsappLink);
+  }
+
   const navbar = document.querySelector('.navbar');
   if (navbar) {
     const handleScroll = () => {
