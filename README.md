@@ -30,8 +30,8 @@ This project is the official website and institute management interface for **Ma
 ## Project Structure
 ```text
 master-computer/
-├── frontend/
-│   ├── index.html
+├── index.html
+├── html/
 │   ├── about.html
 │   ├── courses.html
 │   ├── course-details.html
@@ -42,21 +42,12 @@ master-computer/
 │   ├── gallery.html
 │   ├── login.html
 │   ├── admin-login.html
-│   ├── css/
-│   ├── js/
-│   └── assets/
-├── backend/
-│   └── src/
-├── database/
-│   ├── schema.sql
-│   ├── dummy-data.sql
-│   └── queries.sql
-├── docs/
-│   ├── project-architecture.md
-│   ├── database-documentation.md
-│   └── api-documentation.md
+│   └── 404.html
+├── css/
+├── js/
+├── assets/
 ├── README.md
-└── .gitignore
+└── robots.txt
 ```
 
 ## Demo Credentials
@@ -67,10 +58,10 @@ The current frontend uses placeholder/demo records only. Example demo values:
 - Demo Branch Codes: MCI-BR01, MCI-BR02
 
 ## How to Run Frontend
-1. Open the frontend folder in a browser directly or serve it with a local static server.
+1. Open the project folder in a browser directly or serve it with a local static server.
 2. For example, using Python:
    ```bash
-   cd frontend
+   cd master-computer
    python -m http.server 8000
    ```
 3. Open `http://localhost:8000` in a browser.
