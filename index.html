@@ -4,6 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    if (window.location.protocol.startsWith('http') && !window.location.search.includes('no_redirect')) {
+      window.location.replace('index.php' + window.location.search + window.location.hash);
+    }
+  </script>
+  <meta http-equiv="refresh" content="0; url=index.php" />
   <meta name="description"
     content="Master Computer Institute offers practical computer education, professional courses, admissions, and certificate verification in Nawabganj, Uttar Pradesh." />
   <title>Master Computer Institute | Computer Courses & Training</title>

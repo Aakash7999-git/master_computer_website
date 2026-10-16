@@ -98,10 +98,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   document.querySelectorAll('.footer-grid > div:nth-child(2) ul').forEach((quickLinks) => {
-    if ([...quickLinks.querySelectorAll('a')].some((link) => link.getAttribute('href') === 'gallery.html')) return;
+    if ([...quickLinks.querySelectorAll('a')].some((link) => (link.getAttribute('href') || '').includes('gallery'))) return;
     const galleryItem = document.createElement('li');
-    galleryItem.innerHTML = `<a href="${pagePrefix}gallery.html">Gallery</a>`;
-    const admissionsLink = [...quickLinks.querySelectorAll('a')].find((link) => link.getAttribute('href') === 'admission.html');
+    galleryItem.innerHTML = `<a href="${pagePrefix}gallery.php">Gallery</a>`;
+    const admissionsLink = [...quickLinks.querySelectorAll('a')].find((link) => (link.getAttribute('href') || '').includes('admission'));
     admissionsLink?.parentElement.before(galleryItem);
   });
 
