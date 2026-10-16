@@ -94,8 +94,7 @@ master-computer/
 │   ├── gallery.php                # Protected admin gallery upload & CRUD API
 │   └── admin-actions.php          # Protected settings, message status & audit logs
 ├── database/
-│   ├── master_computer.sql        # Full MySQL schema, indexes, FKs & seed data
-│   └── migration_manual_entry.sql # Idempotent migration for offline entry & students table
+│   └── master_computer.sql        # Full MySQL schema, indexes, FKs, students table & seed data
 ├── assets/                        # Images, logos, fonts, vendor CSS/JS
 ├── css/                           # Core styles (style.css, responsive.css, animations.css, admin.css)
 └── js/                            # Core scripts (main.js, animations.js, admin.js)
