@@ -89,9 +89,11 @@ master-computer/
 ├── database/
 │   └── master_computer.sql        # Full MySQL schema, indexes, FKs & seed data
 ├── assets/                        # Images, logos, fonts, vendor CSS/JS
-├── css/                           # Main, responsive, and admin styling
-└── js/                            # Public and admin interactive scripts
+├── css/                           # Core styles (style.css, responsive.css, animations.css, admin.css)
+└── js/                            # Core scripts (main.js, animations.js, admin.js)
 ```
+
+> **Note on Project Cleanup (Phase 14)**: Legacy static `.html` files in `html/`, legacy mock auth scripts, and redundant duplicate assets in `frontend/` (~50 MB) were audited, backed up, and safely pruned. All active views run natively on PHP 8+ with prepared MySQL queries and asynchronous AJAX requests.
 
 ---
 
