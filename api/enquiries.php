@@ -18,6 +18,7 @@ $action = $_GET['action'] ?? $_POST['action'] ?? 'list';
 if ($action === 'export_csv') {
     $search = trim($_GET['search'] ?? '');
     $status = trim($_GET['status'] ?? '');
+    $source = trim($_GET['source'] ?? '');
     $course = trim($_GET['course'] ?? '');
     $branch = trim($_GET['branch'] ?? '');
     $dateFrom = trim($_GET['date_from'] ?? '');
@@ -34,6 +35,10 @@ if ($action === 'export_csv') {
     if (!empty($status)) {
         $where[] = "status = ?";
         $params[] = $status;
+    }
+    if (!empty($source) && in_array($source, ['Website', 'Offline'], true)) {
+        $where[] = "source = ?";
+        $params[] = $source;
     }
     if (!empty($course)) {
         $where[] = "course_name = ?";
@@ -52,7 +57,7 @@ if ($action === 'export_csv') {
         $params[] = $dateTo;
     }
 
-    $sql = "SELECT enquiry_code, full_name, mobile, email, course_name, branch_name, city, preferred_batch, status, follow_up_date, admin_notes, created_at 
+    $sql = "SELECT enquiry_code, full_name, mobile, email, course_name, branch_name, city, preferred_batch, source, status, follow_up_date, admin_notes, created_at 
             FROM enquiries WHERE " . implode(" AND ", $where) . " ORDER BY id DESC";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
@@ -64,7 +69,7 @@ if ($action === 'export_csv') {
     $output = fopen('php://output', 'w');
     // UTF-8 BOM for Excel
     fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
-    fputcsv($output, ['Enquiry Code', 'Full Name', 'Mobile', 'Email', 'Course', 'Branch', 'City', 'Batch', 'Status', 'Follow-up Date', 'Admin Notes', 'Date Received']);
+    fputcsv($output, ['Enquiry Code', 'Full Name', 'Mobile', 'Email', 'Course', 'Branch', 'City', 'Batch', 'Source', 'Status', 'Follow-up Date', 'Admin Notes', 'Date Received']);
 
     foreach ($rows as $row) {
         fputcsv($output, [
@@ -76,6 +81,7 @@ if ($action === 'export_csv') {
             $row['branch_name'],
             $row['city'] ?? '—',
             $row['preferred_batch'] ?? '—',
+            $row['source'] ?? 'Website',
             $row['status'],
             $row['follow_up_date'] ?? '—',
             $row['admin_notes'] ?? '',
@@ -94,6 +100,7 @@ header('Content-Type: application/json; charset=utf-8');
 if ($action === 'list') {
     $search = trim($_GET['search'] ?? '');
     $status = trim($_GET['status'] ?? '');
+    $source = trim($_GET['source'] ?? '');
     $course = trim($_GET['course'] ?? '');
     $branch = trim($_GET['branch'] ?? '');
     $dateFrom = trim($_GET['date_from'] ?? '');
@@ -114,6 +121,10 @@ if ($action === 'list') {
     if (!empty($status)) {
         $where[] = "status = ?";
         $params[] = $status;
+    }
+    if (!empty($source) && in_array($source, ['Website', 'Offline'], true)) {
+        $where[] = "source = ?";
+        $params[] = $source;
     }
     if (!empty($course)) {
         $where[] = "course_name = ?";
@@ -141,7 +152,7 @@ if ($action === 'list') {
     $totalPages = ceil($totalRecords / $limit);
 
     // Rows
-    $sql = "SELECT id, enquiry_code, full_name, mobile, email, course_name, branch_name, city, preferred_batch, message, status, follow_up_date, admin_notes, created_at, updated_at
+    $sql = "SELECT id, enquiry_code, full_name, mobile, email, course_name, branch_name, city, preferred_batch, message, source, status, follow_up_date, admin_notes, created_by_admin_id, created_at, updated_at
             FROM enquiries 
             WHERE {$whereSql} 
             ORDER BY id DESC 
@@ -166,7 +177,13 @@ if ($action === 'list') {
 // -------------------------------------------------------------
 if ($action === 'get') {
     $id = (int)($_GET['id'] ?? 0);
-    $stmt = $pdo->prepare("SELECT * FROM enquiries WHERE id = ? LIMIT 1");
+    $stmt = $pdo->prepare("
+        SELECT e.*, a.username as created_by_username, a.full_name as created_by_name
+        FROM enquiries e
+        LEFT JOIN admins a ON e.created_by_admin_id = a.id
+        WHERE e.id = ? 
+        LIMIT 1
+    ");
     $stmt->execute([$id]);
     $row = $stmt->fetch();
 
@@ -177,7 +194,119 @@ if ($action === 'get') {
 }
 
 // -------------------------------------------------------------
-// 4. Update Status and Notes
+// 4. Create Offline / Walk-in Enquiry
+// -------------------------------------------------------------
+if ($action === 'create_offline') {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        json_response(false, 'Method not allowed.', [], 405);
+    }
+
+    $fullName = sanitize_input($_POST['full_name'] ?? '');
+    $mobile = sanitize_input($_POST['mobile'] ?? '');
+    $email = sanitize_input($_POST['email'] ?? '');
+    $courseName = sanitize_input($_POST['course_name'] ?? '');
+    $branchName = sanitize_input($_POST['branch_name'] ?? '');
+    $batch = sanitize_input($_POST['preferred_batch'] ?? 'Morning');
+    $city = sanitize_input($_POST['city'] ?? 'Nawabganj');
+    $message = sanitize_input($_POST['message'] ?? '');
+    $followUpDate = !empty($_POST['follow_up_date']) ? date('Y-m-d', strtotime($_POST['follow_up_date'])) : null;
+    $adminNotes = sanitize_input($_POST['admin_notes'] ?? '');
+
+    // Validation
+    if (empty($fullName)) {
+        json_response(false, 'Please enter the visitor\'s full name.', ['field' => 'full_name'], 422);
+    }
+    $cleanMobile = preg_replace('/[^0-9]/', '', $mobile);
+    if (strlen($cleanMobile) < 10) {
+        json_response(false, 'Please enter a valid 10-digit mobile number.', ['field' => 'mobile'], 422);
+    }
+    if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        json_response(false, 'Please enter a valid email address.', ['field' => 'email'], 422);
+    }
+    if (empty($courseName)) {
+        json_response(false, 'Please select the course of interest.', ['field' => 'course_name'], 422);
+    }
+    if (empty($branchName)) {
+        json_response(false, 'Please select the center location.', ['field' => 'branch_name'], 422);
+    }
+
+    try {
+        $pdo->beginTransaction();
+
+        // Find course_id if available
+        $courseId = null;
+        $cStmt = $pdo->prepare("SELECT id FROM courses WHERE name = ? OR course_code = ? LIMIT 1");
+        $cStmt->execute([$courseName, $courseName]);
+        if ($cRow = $cStmt->fetch()) {
+            $courseId = (int)$cRow['id'];
+        }
+
+        // Find branch_id if available
+        $branchId = null;
+        $bStmt = $pdo->prepare("SELECT id FROM branches WHERE name LIKE ? LIMIT 1");
+        $bStmt->execute(["%{$branchName}%"]);
+        if ($bRow = $bStmt->fetch()) {
+            $branchId = (int)$bRow['id'];
+        }
+
+        // Generate unique enquiry code
+        $enquiryCode = generate_enquiry_code($pdo);
+        $adminInfo = current_admin();
+        $adminId = $adminInfo['id'] ?? null;
+
+        $insert = $pdo->prepare("
+            INSERT INTO enquiries (
+                enquiry_code, full_name, mobile, email, course_id, course_name, branch_id,
+                branch_name, city, preferred_batch, message, source_page, source, status,
+                assigned_staff, created_by_admin_id, admin_notes, follow_up_date
+            ) VALUES (
+                ?, ?, ?, ?, ?, ?, ?,
+                ?, ?, ?, ?, 'offline_walkin', 'Offline', 'New',
+                ?, ?, ?, ?
+            )
+        ");
+
+        $insert->execute([
+            $enquiryCode,
+            $fullName,
+            $mobile,
+            $email ?: null,
+            $courseId,
+            $courseName,
+            $branchId,
+            $branchName,
+            $city,
+            $batch,
+            $message ?: null,
+            $adminInfo['name'] ?? 'Staff',
+            $adminId,
+            $adminNotes ?: null,
+            $followUpDate
+        ]);
+
+        $newId = (int)$pdo->lastInsertId();
+        $pdo->commit();
+
+        log_admin_activity($pdo, 'Create Offline Enquiry', 'enquiry', $newId, "Recorded walk-in enquiry {$enquiryCode} for {$fullName} ({$courseName})");
+
+        json_response(true, "Offline enquiry {$enquiryCode} recorded successfully!", [
+            'id'           => $newId,
+            'enquiry_code' => $enquiryCode,
+            'full_name'    => $fullName,
+            'source'       => 'Offline'
+        ], 201);
+
+    } catch (Exception $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        error_log("Offline enquiry creation error: " . $e->getMessage());
+        json_response(false, 'Failed to record offline enquiry. Database error.', [], 500);
+    }
+}
+
+// -------------------------------------------------------------
+// 5. Update Status and Notes
 // -------------------------------------------------------------
 if ($action === 'update_status') {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -212,7 +341,7 @@ if ($action === 'update_status') {
 }
 
 // -------------------------------------------------------------
-// 5. Delete Record
+// 6. Delete Record
 // -------------------------------------------------------------
 if ($action === 'delete') {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

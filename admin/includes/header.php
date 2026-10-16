@@ -18,10 +18,12 @@ try {
     $newEnquiriesCount = (int)$pdo->query("SELECT COUNT(*) FROM enquiries WHERE status = 'New'")->fetchColumn();
     $newAdmissionsCount = (int)$pdo->query("SELECT COUNT(*) FROM admissions WHERE status = 'New'")->fetchColumn();
     $unreadContactsCount = (int)$pdo->query("SELECT COUNT(*) FROM contact_messages WHERE status = 'Unread'")->fetchColumn();
+    $activeStudentsCount = (int)$pdo->query("SELECT COUNT(*) FROM students WHERE status = 'Active'")->fetchColumn();
 } catch (Exception $e) {
     $newEnquiriesCount = 0;
     $newAdmissionsCount = 0;
     $unreadContactsCount = 0;
+    $activeStudentsCount = 0;
 }
 ?>
 <!DOCTYPE html>
@@ -73,6 +75,16 @@ try {
           <span>Admissions</span>
           <?php if ($newAdmissionsCount > 0): ?>
             <span class="admin-nav-badge" style="background:var(--admin-primary-light);"><?= $newAdmissionsCount ?></span>
+          <?php endif; ?>
+        </a>
+      </li>
+
+      <li class="admin-nav-item">
+        <a href="students.php" class="admin-nav-link <?= $activeNav === 'students' ? 'active' : '' ?>">
+          <i class="bi bi-people-fill"></i>
+          <span>Students</span>
+          <?php if ($activeStudentsCount > 0): ?>
+            <span class="admin-nav-badge" style="background:#10b981;"><?= $activeStudentsCount ?></span>
           <?php endif; ?>
         </a>
       </li>

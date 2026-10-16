@@ -16,12 +16,20 @@ $pdo = getDBConnection();
 try {
     // 1. Live statistics from SQL queries
     $totalEnquiries = (int)$pdo->query("SELECT COUNT(*) FROM enquiries")->fetchColumn();
+    $websiteEnquiries = (int)$pdo->query("SELECT COUNT(*) FROM enquiries WHERE source = 'Website'")->fetchColumn();
+    $offlineEnquiries = (int)$pdo->query("SELECT COUNT(*) FROM enquiries WHERE source = 'Offline'")->fetchColumn();
     $newEnquiries = (int)$pdo->query("SELECT COUNT(*) FROM enquiries WHERE status = 'New'")->fetchColumn();
     $followUpEnquiries = (int)$pdo->query("SELECT COUNT(*) FROM enquiries WHERE status = 'Follow-up'")->fetchColumn();
     $convertedEnquiries = (int)$pdo->query("SELECT COUNT(*) FROM enquiries WHERE status = 'Converted'")->fetchColumn();
 
     $totalAdmissions = (int)$pdo->query("SELECT COUNT(*) FROM admissions")->fetchColumn();
+    $websiteAdmissions = (int)$pdo->query("SELECT COUNT(*) FROM admissions WHERE source = 'Website'")->fetchColumn();
+    $offlineAdmissions = (int)$pdo->query("SELECT COUNT(*) FROM admissions WHERE source = 'Offline'")->fetchColumn();
     $newAdmissions = (int)$pdo->query("SELECT COUNT(*) FROM admissions WHERE status = 'New'")->fetchColumn();
+    $enrolledAdmissions = (int)$pdo->query("SELECT COUNT(*) FROM admissions WHERE status = 'Enrolled'")->fetchColumn();
+
+    $totalStudents = (int)$pdo->query("SELECT COUNT(*) FROM students")->fetchColumn();
+    $activeStudents = (int)$pdo->query("SELECT COUNT(*) FROM students WHERE status = 'Active'")->fetchColumn();
 
     $activeCourses = (int)$pdo->query("SELECT COUNT(*) FROM courses WHERE status = 'active'")->fetchColumn();
     $activeBranches = (int)$pdo->query("SELECT COUNT(*) FROM branches WHERE status = 'active'")->fetchColumn();
@@ -30,7 +38,7 @@ try {
 
     // 2. Recent Enquiries (latest 6)
     $stmtRecentEnq = $pdo->query("
-        SELECT id, enquiry_code, full_name, mobile, email, course_name, branch_name, status, created_at
+        SELECT id, enquiry_code, full_name, mobile, email, course_name, branch_name, source, status, created_at
         FROM enquiries
         ORDER BY id DESC
         LIMIT 6
@@ -39,7 +47,7 @@ try {
 
     // 3. Recent Admissions (latest 6)
     $stmtRecentAdm = $pdo->query("
-        SELECT id, admission_code, full_name, mobile, course_name, branch_name, batch, status, created_at
+        SELECT id, admission_code, full_name, mobile, course_name, branch_name, batch, source, status, created_at
         FROM admissions
         ORDER BY id DESC
         LIMIT 6
@@ -59,18 +67,25 @@ try {
     json_response(true, 'Dashboard metrics loaded successfully.', [
         'stats' => [
             'total_enquiries'      => $totalEnquiries,
+            'website_enquiries'    => $websiteEnquiries,
+            'offline_enquiries'    => $offlineEnquiries,
             'new_enquiries'        => $newEnquiries,
             'followup_enquiries'   => $followUpEnquiries,
             'converted_enquiries'  => $convertedEnquiries,
             'total_admissions'     => $totalAdmissions,
+            'website_admissions'   => $websiteAdmissions,
+            'offline_admissions'   => $offlineAdmissions,
             'new_admissions'       => $newAdmissions,
+            'enrolled_admissions'  => $enrolledAdmissions,
+            'total_students'       => $totalStudents,
+            'active_students'      => $activeStudents,
             'active_courses'       => $activeCourses,
             'active_branches'      => $activeBranches,
             'unread_messages'      => $unreadMessages,
             'total_certificates'   => $totalCertificates
         ],
-        'recent_enquiries'  => $recentEnquiries,
-        'recent_admissions' => $recentAdmissions,
+        'recent_enquiries'    => $recentEnquiries,
+        'recent_admissions'   => $recentAdmissions,
         'course_distribution' => $courseDist
     ]);
 

@@ -23,8 +23,13 @@ This repository upgrades the original frontend into a fully database-driven, pro
   - Secure session-based authentication using `password_hash()` (Bcrypt) and `password_verify()`.
   - Session regeneration on login, strict HTTP-only cookies, and CSRF token verification.
   - Login attempt rate limiting to prevent brute-force attacks.
-  - Live statistics dashboard (total enquiries, pending follow-ups, converted leads, admissions, active courses, unread messages).
-  - Search, multi-criteria filtering, pagination, status transitions, internal notes, and one-click CSV export for enquiries and admissions.
+  - Live statistics dashboard (total enquiries, website vs offline breakdown, admissions, active enrolled students, pending follow-ups, active courses, unread messages).
+  - Quick action buttons on dashboard: `+ Add Enquiry` and `+ Register Student` for rapid offline walk-in entry.
+  - **Offline Walk-in Enquiries**: Record walk-in visitor details directly from admin dashboard and enquiries page (`source = 'Offline'`), with automated reference code generation (`MCI-ENQ-XXXX`) and staff notes.
+  - **Offline Student Admissions**: Register walk-in admissions (`source = 'Offline'`) directly from admin dashboard or admissions page with safe code generation (`MCI-ADM-XXXX`).
+  - **Student Management (`/admin/students.php`)**: Dedicated student roster tracking active, completed, and dropped students (`MCI-STU-XXXX`), linked to admissions, with idempotent enrollment (zero duplicate students), full profile view, editable details, and CSV export.
+  - Source filtering across enquiries, admissions, and students (`Website` vs `Offline`).
+  - Search, multi-criteria filtering, pagination, status transitions, internal notes, and one-click CSV export for enquiries, admissions, and students.
   - Complete course management (add, edit curriculum, fees, duration, activate/deactivate).
   - Branch and center location management.
   - Contact message review and email/WhatsApp direct reply actions.
@@ -61,9 +66,10 @@ master-computer/
 │   ├── login.php                  # Secure database-backed administrator login
 │   ├── logout.php                 # Session invalidation & cookie cleanup
 │   ├── setup.php                  # First-admin initialization CLI / Web setup
-│   ├── dashboard.php              # Live statistics overview & recent activity
-│   ├── enquiries.php              # Enquiry search, filter, notes & CSV export
-│   ├── admissions.php             # Admission applications review & management
+│   ├── dashboard.php              # Live statistics overview, quick actions & modals
+│   ├── enquiries.php              # Enquiry search, filter, manual offline entry & export
+│   ├── admissions.php             # Admission review, offline registration & export
+│   ├── students.php               # Dedicated enrolled students roster & profile management
 │   ├── courses.php                # Course catalog creation, pricing & status
 │   ├── branches.php               # Center branch information & contacts
 │   ├── contacts.php               # Inbound visitor messages & direct replies
@@ -79,15 +85,17 @@ master-computer/
 │   ├── contact.php                # Public contact message AJAX endpoint
 │   ├── certificate.php            # Public certificate verification AJAX endpoint
 │   ├── dashboard.php              # Protected admin metrics API
-│   ├── enquiries.php              # Protected admin enquiry CRUD & CSV export
-│   ├── admissions.php             # Protected admin admission CRUD & CSV export
+│   ├── enquiries.php              # Protected admin enquiry CRUD, offline creation & export
+│   ├── admissions.php             # Protected admin admission CRUD, offline registration & export
+│   ├── students.php               # Protected admin student CRUD, profile updates & export
 │   ├── courses.php                # Protected admin course CRUD API
 │   ├── branches.php               # Protected admin branch CRUD API
 │   ├── certificates.php           # Protected admin certificate CRUD API
 │   ├── gallery.php                # Protected admin gallery upload & CRUD API
 │   └── admin-actions.php          # Protected settings, message status & audit logs
 ├── database/
-│   └── master_computer.sql        # Full MySQL schema, indexes, FKs & seed data
+│   ├── master_computer.sql        # Full MySQL schema, indexes, FKs & seed data
+│   └── migration_manual_entry.sql # Idempotent migration for offline entry & students table
 ├── assets/                        # Images, logos, fonts, vendor CSS/JS
 ├── css/                           # Core styles (style.css, responsive.css, animations.css, admin.css)
 └── js/                            # Core scripts (main.js, animations.js, admin.js)
@@ -175,7 +183,11 @@ master-computer/
 | **Admin Authentication** | Log in with `admin` / `Admin@MCI2026!` | Session regenerated, redirects to dashboard with live statistics. |
 | **Invalid Credentials** | Attempt login with incorrect password | Generic error message, failed attempt recorded for rate limiting. |
 | **Enquiry Management** | Filter by status "New", change status to "Contacted", add notes | Changes persist in MySQL and update live counters without reload. |
-| **CSV Export** | Click "Export CSV" on enquiries or admissions | Downloads UTF-8 encoded `.csv` file with current filter criteria. |
+| **CSV Export** | Click "Export CSV" on enquiries, admissions or students | Downloads UTF-8 encoded `.csv` file with current filter criteria. |
+| **Offline Enquiry Entry** | Click "+ Add Enquiry" on dashboard or enquiries page, fill details and submit | Saves walk-in record with `source = 'Offline'`, generates `MCI-ENQ-XXXX`, refreshes table and live counters without reload. |
+| **Offline Student Registration** | Click "+ Register Student" on dashboard, admissions or students page | Saves admission record with `source = 'Offline'` and automatically provisions enrolled student record `MCI-STU-XXXX`. |
+| **Idempotent Student Enrollment** | Change admission status to "Enrolled" multiple times | Idempotently links to existing student record without producing duplicates. |
+| **Student Roster Filtering** | Filter students by Source (Website vs Offline), Course, Branch, or Status | Table instantly updates via AJAX with matching enrolled student records. |
 | **Course Management** | Add or edit course fee / duration | Live course list on public `courses.php` reflects changes immediately. |
 | **Admin Logout** | Click "Logout" in admin header | Session destroyed, cookies cleared, protected pages reject access. |
 

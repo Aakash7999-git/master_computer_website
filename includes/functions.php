@@ -233,3 +233,108 @@ function reset_failed_logins(PDO $pdo, int $adminId): void {
         error_log("Reset failed logins error: " . $e->getMessage());
     }
 }
+
+/**
+ * Generate a unique enquiry code (e.g. MCI-ENQ-0005)
+ */
+function generate_enquiry_code(PDO $pdo): string {
+    $stmt = $pdo->query("SELECT MAX(id) FROM enquiries");
+    $nextId = ((int)$stmt->fetchColumn()) + 1;
+    return 'MCI-ENQ-' . str_pad((string)$nextId, 4, '0', STR_PAD_LEFT);
+}
+
+/**
+ * Generate a unique admission code (e.g. MCI-ADM-0004)
+ */
+function generate_admission_code(PDO $pdo): string {
+    $stmt = $pdo->query("SELECT MAX(id) FROM admissions");
+    $nextId = ((int)$stmt->fetchColumn()) + 1;
+    return 'MCI-ADM-' . str_pad((string)$nextId, 4, '0', STR_PAD_LEFT);
+}
+
+/**
+ * Generate a unique student code (e.g. MCI-STU-0001)
+ */
+function generate_student_code(PDO $pdo): string {
+    $stmt = $pdo->query("SELECT MAX(id) FROM students");
+    $nextId = ((int)$stmt->fetchColumn()) + 1;
+    return 'MCI-STU-' . str_pad((string)$nextId, 4, '0', STR_PAD_LEFT);
+}
+
+/**
+ * Convert an admission into an enrolled student record without creating duplicates
+ */
+function enroll_student_from_admission(PDO $pdo, int $admissionId, ?int $adminId = null): ?int {
+    // 1. Check if student already enrolled from this admission
+    $checkStmt = $pdo->prepare("SELECT id FROM students WHERE admission_id = ? LIMIT 1");
+    $checkStmt->execute([$admissionId]);
+    $existingStudentId = $checkStmt->fetchColumn();
+    if ($existingStudentId) {
+        // Already enrolled; ensure active status
+        $pdo->prepare("UPDATE students SET status = 'Active', updated_at = NOW() WHERE id = ?")->execute([$existingStudentId]);
+        return (int)$existingStudentId;
+    }
+
+    // 2. Fetch admission record
+    $admStmt = $pdo->prepare("SELECT * FROM admissions WHERE id = ? LIMIT 1");
+    $admStmt->execute([$admissionId]);
+    $adm = $admStmt->fetch();
+    if (!$adm) {
+        return null;
+    }
+
+    // 3. Generate student code
+    $studentCode = generate_student_code($pdo);
+    $admissionDate = !empty($adm['admission_date']) ? $adm['admission_date'] : date('Y-m-d');
+    $enrollmentDate = date('Y-m-d');
+
+    // 4. Insert into students table
+    $insert = $pdo->prepare("
+        INSERT INTO students (
+            student_code, admission_id, full_name, dob, gender, mobile, alternate_mobile,
+            email, address, city, qualification, course_id, course_name, branch_id,
+            branch_name, batch_timing, admission_date, enrollment_date, status, source,
+            created_by_admin_id, remarks
+        ) VALUES (
+            ?, ?, ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, 'Active', ?,
+            ?, ?
+        )
+    ");
+
+    $insert->execute([
+        $studentCode,
+        $adm['id'],
+        $adm['full_name'],
+        $adm['dob'] ?: null,
+        $adm['gender'] ?: null,
+        $adm['mobile'],
+        $adm['alternate_mobile'] ?? null,
+        $adm['email'] ?: null,
+        $adm['address'] ?: null,
+        $adm['city'] ?: null,
+        $adm['qualification'] ?: null,
+        $adm['course_id'] ?: null,
+        $adm['course_name'],
+        $adm['branch_id'] ?: null,
+        $adm['branch_name'],
+        $adm['batch'] ?: null,
+        $admissionDate,
+        $enrollmentDate,
+        $adm['source'] ?? 'Offline',
+        $adminId ?: ($adm['created_by_admin_id'] ?? null),
+        $adm['admin_notes'] ?? null
+    ]);
+
+    $studentId = (int)$pdo->lastInsertId();
+
+    // 5. Update admission status to 'Enrolled'
+    $pdo->prepare("UPDATE admissions SET status = 'Enrolled', updated_at = NOW() WHERE id = ?")->execute([$admissionId]);
+
+    // 6. Log activity
+    log_admin_activity($pdo, 'Enroll Student', 'student', $studentId, "Enrolled student {$studentCode} ({$adm['full_name']}) from admission #{$adm['admission_code']}");
+
+    return $studentId;
+}
+
