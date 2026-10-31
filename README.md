@@ -117,15 +117,16 @@ Then visit `http://localhost:8080` in your browser.
 
 ---
 
-## 6. Form Handling & WhatsApp Integration
+## 6. Form Handling & Formspree Email Integration
 
-All forms (Course Enquiry modal, Admission Application, and Contact Us) are handled in `js/forms.js`:
-- **Client-Side Validation**: Ensures valid 10-digit phone numbers, valid email formats, and required field completion before submitting.
-- **WhatsApp Direct Connection**: Connects the visitor directly to the Master Computer Institute official counselor WhatsApp (`+91 9696525287`) with the application details neatly pre-filled.
-- **Formspree / External Form Service (Optional)**: To receive submissions via email through Formspree, set your Formspree endpoint at the top of `js/forms.js`:
-  ```javascript
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
-  ```
+All forms (Course Enquiry modal, Admission Application, and Contact Us) are handled in `js/forms.js` using AJAX `fetch` with the official Formspree endpoint:
+```javascript
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xdeelbla';
+```
+- **Centralized Endpoint**: Submissions from the Homepage Modal, Admission Enquiry form, and Contact Us form route directly to Formspree email inbox.
+- **Client-Side Validation**: Ensures 10-digit Indian phone numbers (`^[6-9]\d{9}$`), valid email formats, and required field completion before submitting.
+- **Submission State Protection**: Disables submit buttons during processing to prevent duplicate submissions, and provides clear status messaging.
+- **Independent WhatsApp Alternative**: Direct WhatsApp connection (`+91 9696525287`) remains available as an alternative communication channel across contact cards, footers, and direct inquiry buttons.
 
 ---
 

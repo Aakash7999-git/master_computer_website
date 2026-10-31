@@ -1,10 +1,13 @@
 /**
  * Master Computer Institute - Static Frontend Forms
- * Handles client-side validation and WhatsApp / Formspree integration for enquiries and admissions
+ * Official Formspree Email Integration & WhatsApp Alternative
  */
 
-// Formspree endpoint (optional - user can insert their endpoint ID e.g. 'https://formspree.io/f/my-form-id')
-const FORMSPREE_ENDPOINT = ''; // Leave empty for direct WhatsApp submission
+// Centralized Official Formspree Endpoint
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xdeelbla';
+
+// Official Institute Helpline
+const MCI_WHATSAPP_NUMBER = '919696525287';
 
 // Global Enquire Modal Functions
 function openEnquireModal(courseName = '') {
@@ -15,14 +18,13 @@ function openEnquireModal(courseName = '') {
   if (msgBox) {
     msgBox.style.display = 'none';
     msgBox.className = 'form-message';
+    msgBox.textContent = '';
   }
 
   if (courseSelect && courseName) {
-    let matched = false;
     for (let opt of courseSelect.options) {
       if (opt.value.toLowerCase().includes(courseName.toLowerCase()) || courseName.toLowerCase().includes(opt.value.toLowerCase())) {
         opt.selected = true;
-        matched = true;
         break;
       }
     }
@@ -66,8 +68,8 @@ function showFormMsg(el, msg, type) {
 async function handleStaticEnquiry(e) {
   e.preventDefault();
   const form = e.target;
-  const submitBtn = document.getElementById('modalEnqSubmitBtn');
-  const msgBox = document.getElementById('modalEnquiryMessage');
+  const submitBtn = document.getElementById('modalEnqSubmitBtn') || form.querySelector('button[type="submit"]');
+  const msgBox = document.getElementById('modalEnquiryMessage') || form.querySelector('.form-message');
 
   const name = (form.fullName?.value || '').trim();
   const mobile = (form.mobile?.value || '').trim();
@@ -77,65 +79,82 @@ async function handleStaticEnquiry(e) {
   const batch = (form.batch?.value || 'Morning').trim();
   const message = (form.message?.value || '').trim();
 
-  if (!name) {
-    showFormMsg(msgBox, 'Please enter your full name.', 'error');
+  if (!name || name.length < 2) {
+    showFormMsg(msgBox, 'Please enter your full name (at least 2 characters).', 'error');
     form.fullName?.focus();
     return;
   }
+
   const cleanMobile = mobile.replace(/[^0-9]/g, '');
-  if (cleanMobile.length < 10) {
+  if (!/^[6-9]\d{9}$/.test(cleanMobile)) {
     showFormMsg(msgBox, 'Please enter a valid 10-digit mobile number.', 'error');
     form.mobile?.focus();
     return;
   }
+
   if (!course) {
-    showFormMsg(msgBox, 'Please select a course.', 'error');
+    showFormMsg(msgBox, 'Please select a course to continue.', 'error');
     form.course?.focus();
     return;
   }
 
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<span>Connecting to Institute...</span>';
+  // Prevent duplicate submissions
+  const originalBtnContent = submitBtn ? submitBtn.innerHTML : 'Submit Enquiry';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>Submitting Enquiry...</span>';
+  }
+  if (msgBox) msgBox.style.display = 'none';
 
-  // If Formspree endpoint is configured, try submitting
-  if (FORMSPREE_ENDPOINT) {
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ name, mobile, email, course, branch, batch, message })
-      });
-      if (res.ok) {
-        showFormMsg(msgBox, 'Enquiry submitted successfully! Our admissions counselor will contact you shortly.', 'success');
-        form.reset();
-        setTimeout(closeEnquireModal, 2500);
-        return;
+  const payload = {
+    _subject: 'Course Enquiry (Modal) — Master Computer Institute',
+    'Student Name': name,
+    'Mobile Number': cleanMobile,
+    'Email Address': email || 'Not Provided',
+    'Selected Course': course,
+    'Preferred Center': branch,
+    'Preferred Batch': batch,
+    'Message / Questions': message || 'None',
+    'Submitted At': new Date().toLocaleString()
+  };
+
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      showFormMsg(msgBox, 'Thank you! Your course enquiry has been submitted successfully. Our admissions counselor will contact you shortly.', 'success');
+      form.reset();
+      setTimeout(() => {
+        closeEnquireModal();
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnContent;
+        }
+      }, 3000);
+    } else {
+      let errData = {};
+      try { errData = await res.json(); } catch (_) {}
+      const errMsg = errData.errors?.map(e => e.message).join(', ') || 'Form submission failed. Please try again.';
+      showFormMsg(msgBox, `${errMsg} Alternatively, contact us directly on WhatsApp at +91 ${MCI_WHATSAPP_NUMBER}.`, 'error');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnContent;
       }
-    } catch (err) {
-      // Fallback to WhatsApp
+    }
+  } catch (err) {
+    showFormMsg(msgBox, `Network error submitting enquiry. Please check your internet connection or reach our helpline directly on WhatsApp at +91 ${MCI_WHATSAPP_NUMBER}.`, 'error');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnContent;
     }
   }
-
-  // Direct WhatsApp Enquiry connection
-  const waText = encodeURIComponent(
-    `*Course Enquiry — Master Computer Institute*\n` +
-    `• Name: ${name}\n` +
-    `• Mobile: ${mobile}\n` +
-    (email ? `• Email: ${email}\n` : '') +
-    `• Course: ${course}\n` +
-    `• Center: ${branch}\n` +
-    `• Batch: ${batch}\n` +
-    (message ? `• Note: ${message}\n` : '')
-  );
-
-  window.open(`https://wa.me/919696525287?text=${waText}`, '_blank');
-  showFormMsg(msgBox, 'Enquiry prepared. Continuing to WhatsApp to connect with our institute admissions desk...', 'success');
-  
-  setTimeout(() => {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = '<span>Submit Enquiry</span>';
-    closeEnquireModal();
-  }, 2000);
 }
 
 // 2. Static Admission Application Handler (Homepage & Admission Page)
@@ -158,64 +177,82 @@ async function handleStaticAdmission(e) {
   const batch = (form.batch?.value || '').trim();
   const message = (form.message?.value || '').trim();
 
-  if (!name || !mobile || !email || !course || !address) {
+  if (!name || !mobile || !email || !course || !address || !qualification) {
     if (msg) showFormMsg(msg, 'Please fill out all required fields marked with (*).', 'error');
     return;
   }
 
   const cleanMobile = mobile.replace(/[^0-9]/g, '');
-  if (cleanMobile.length < 10) {
+  if (!/^[6-9]\d{9}$/.test(cleanMobile)) {
     if (msg) showFormMsg(msg, 'Please enter a valid 10-digit mobile number.', 'error');
+    form.mobile?.focus();
     return;
   }
 
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (msg) showFormMsg(msg, 'Please enter a valid email address.', 'error');
+    form.email?.focus();
+    return;
+  }
+
+  // Prevent duplicate submissions
+  const originalBtnContent = btn ? btn.innerHTML : 'Enquire Now';
   if (btn) {
     btn.disabled = true;
-    btn.textContent = 'Processing Application...';
+    btn.textContent = 'Submitting Application...';
   }
+  if (msg) msg.style.display = 'none';
 
-  if (FORMSPREE_ENDPOINT) {
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ name, dob, gender, mobile, email, city, address, course, branch, qualification, batch, message })
-      });
-      if (res.ok) {
-        if (msg) showFormMsg(msg, 'Admission application received! Our admissions office will verify your details and contact you.', 'success');
-        form.reset();
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = 'Enquire Now';
-        }
-        return;
+  const payload = {
+    _subject: 'Online Admission Application — Master Computer Institute',
+    'Applicant Name': name,
+    'Date of Birth': dob || 'Not Provided',
+    'Gender': gender || 'Not Specified',
+    'Mobile Number': cleanMobile,
+    'Email Address': email,
+    'City': city || 'Nawabganj',
+    'Residential Address': address,
+    'Applied Course': course,
+    'Training Center': branch || 'Master Computer Institute — Nawabganj',
+    'Educational Qualification': qualification,
+    'Preferred Batch': batch || 'Morning',
+    'Learning Goals / Notes': message || 'None',
+    'Submitted At': new Date().toLocaleString()
+  };
+
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      if (msg) showFormMsg(msg, 'Admission application received! Our admissions office will verify your details and contact you for enrollment.', 'success');
+      form.reset();
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalBtnContent;
       }
-    } catch (err) {
-      // Fallback
+    } else {
+      let errData = {};
+      try { errData = await res.json(); } catch (_) {}
+      const errMsg = errData.errors?.map(e => e.message).join(', ') || 'Application submission failed. Please try again.';
+      if (msg) showFormMsg(msg, `${errMsg} Alternatively, reach out directly on WhatsApp at +91 ${MCI_WHATSAPP_NUMBER}.`, 'error');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalBtnContent;
+      }
     }
-  }
-
-  // WhatsApp Fallback
-  const waText = encodeURIComponent(
-    `*Online Admission Application — Master Computer Institute*\n` +
-    `• Applicant: ${name}\n` +
-    `• Mobile: ${mobile}\n` +
-    `• Email: ${email}\n` +
-    `• Course: ${course}\n` +
-    `• Branch: ${branch}\n` +
-    `• City: ${city}\n` +
-    `• Address: ${address}\n` +
-    (qualification ? `• Qualification: ${qualification}\n` : '') +
-    (batch ? `• Batch: ${batch}\n` : '') +
-    (message ? `• Note: ${message}\n` : '')
-  );
-
-  window.open(`https://wa.me/919696525287?text=${waText}`, '_blank');
-  if (msg) showFormMsg(msg, 'Application details prepared. Continuing to WhatsApp to complete your admission enquiry with the counselor...', 'success');
-
-  if (btn) {
-    btn.disabled = false;
-    btn.textContent = 'Enquire Now';
+  } catch (err) {
+    if (msg) showFormMsg(msg, `Network error submitting application. Please check your internet connection or contact our office on WhatsApp at +91 ${MCI_WHATSAPP_NUMBER}.`, 'error');
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalBtnContent;
+    }
   }
 }
 
@@ -232,50 +269,76 @@ async function handleStaticContact(e) {
   const subject = (form.contactSubject?.value || '').trim();
   const message = (form.contactMessage?.value || '').trim();
 
-  if (!name || !email || !message) {
-    if (msg) showFormMsg(msg, 'Please fill out your name, email and message.', 'error');
+  if (!name || name.length < 2) {
+    if (msg) showFormMsg(msg, 'Please enter your name (at least 2 characters).', 'error');
+    form.contactName?.focus();
     return;
   }
 
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (msg) showFormMsg(msg, 'Please enter a valid email address.', 'error');
+    form.contactEmail?.focus();
+    return;
+  }
+
+  if (!message || message.length < 10) {
+    if (msg) showFormMsg(msg, 'Please enter a message of at least 10 characters.', 'error');
+    form.contactMessage?.focus();
+    return;
+  }
+
+  // Prevent duplicate submissions
+  const originalBtnContent = btn ? btn.innerHTML : 'Send Message';
   if (btn) {
     btn.disabled = true;
     btn.textContent = 'Sending Message...';
   }
+  if (msg) msg.style.display = 'none';
 
-  if (FORMSPREE_ENDPOINT) {
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ name, email, mobile, subject, message })
-      });
-      if (res.ok) {
-        if (msg) showFormMsg(msg, 'Thank you! Your message has been sent to Master Computer Institute.', 'success');
-        form.reset();
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = 'Send Message';
-        }
-        return;
+  const cleanMobile = mobile.replace(/[^0-9]/g, '');
+
+  const payload = {
+    _subject: `Contact Inquiry: ${subject || 'New Message'} — Master Computer Institute`,
+    'Sender Name': name,
+    'Email Address': email,
+    'Mobile Number': cleanMobile || 'Not Provided',
+    'Inquiry Subject': subject || 'General Inquiry',
+    'Message': message,
+    'Submitted At': new Date().toLocaleString()
+  };
+
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      if (msg) showFormMsg(msg, 'Thank you! Your message has been sent successfully. Our team will get back to you shortly.', 'success');
+      form.reset();
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalBtnContent;
       }
-    } catch (err) {}
-  }
-
-  const waText = encodeURIComponent(
-    `*Contact Inquiry — Master Computer Institute*\n` +
-    `• Name: ${name}\n` +
-    `• Email: ${email}\n` +
-    (mobile ? `• Mobile: ${mobile}\n` : '') +
-    (subject ? `• Subject: ${subject}\n` : '') +
-    `• Message: ${message}\n`
-  );
-
-  window.open(`https://wa.me/919696525287?text=${waText}`, '_blank');
-  if (msg) showFormMsg(msg, 'Connecting to Master Computer Institute helpline on WhatsApp...', 'success');
-
-  if (btn) {
-    btn.disabled = false;
-    btn.textContent = 'Send Message';
+    } else {
+      let errData = {};
+      try { errData = await res.json(); } catch (_) {}
+      const errMsg = errData.errors?.map(e => e.message).join(', ') || 'Message delivery failed. Please try again.';
+      if (msg) showFormMsg(msg, `${errMsg} Alternatively, message our team directly on WhatsApp at +91 ${MCI_WHATSAPP_NUMBER}.`, 'error');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalBtnContent;
+      }
+    }
+  } catch (err) {
+    if (msg) showFormMsg(msg, `Network error sending message. Please check your internet connection or reach our desk directly on WhatsApp at +91 ${MCI_WHATSAPP_NUMBER}.`, 'error');
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = originalBtnContent;
+    }
   }
 }
-
