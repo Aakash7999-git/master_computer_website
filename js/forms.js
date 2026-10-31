@@ -1,47 +1,10 @@
 /**
- * Master Computer Institute - Static Frontend Forms & Verification
- * Handles client-side validation, WhatsApp / Formspree integration, and real certificate lookup
+ * Master Computer Institute - Static Frontend Forms
+ * Handles client-side validation and WhatsApp / Formspree integration for enquiries and admissions
  */
 
 // Formspree endpoint (optional - user can insert their endpoint ID e.g. 'https://formspree.io/f/my-form-id')
 const FORMSPREE_ENDPOINT = ''; // Leave empty for direct WhatsApp submission
-
-// Registered official institute certificates database
-const REGISTERED_CERTIFICATES = {
-  'MCI-CERT-10001': {
-    certificate_no: 'MCI-CERT-10001',
-    student_name: 'Amit Kumar',
-    father_name: 'Ramesh Kumar',
-    course_name: 'ADCA — Advanced Diploma in Computer Applications',
-    duration: '12 Months',
-    issue_date: '15 Jun 2025',
-    grade: 'A+ (88.5%)',
-    center_name: 'Master Computer Institute, Nawabganj',
-    status: 'Valid'
-  },
-  'MCI-CERT-10002': {
-    certificate_no: 'MCI-CERT-10002',
-    student_name: 'Priya Sharma',
-    father_name: 'Suresh Sharma',
-    course_name: 'CCC — Course on Computer Concepts',
-    duration: '3 Months',
-    issue_date: '20 Aug 2025',
-    grade: 'A (82.0%)',
-    center_name: 'Master Computer Institute, Nawabganj',
-    status: 'Valid'
-  },
-  'MCI-CERT-10003': {
-    certificate_no: 'MCI-CERT-10003',
-    student_name: 'Rahul Verma',
-    father_name: 'Dinesh Verma',
-    course_name: 'Tally Prime + GST',
-    duration: '3 Months',
-    issue_date: '10 Nov 2025',
-    grade: 'A+ (91.0%)',
-    center_name: 'Master Computer Institute, Nawabganj',
-    status: 'Valid'
-  }
-};
 
 // Global Enquire Modal Functions
 function openEnquireModal(courseName = '') {
@@ -313,90 +276,6 @@ async function handleStaticContact(e) {
   if (btn) {
     btn.disabled = false;
     btn.textContent = 'Send Message';
-  }
-}
-
-// 4. Static Certificate Verification
-function handleStaticCertificateVerify(e, inputId, btnId, msgId, resultBoxId) {
-  e.preventDefault();
-  const input = document.getElementById(inputId);
-  const btn = document.getElementById(btnId);
-  const msg = document.getElementById(msgId);
-  const resultBox = document.getElementById(resultBoxId);
-
-  const certNo = (input?.value || '').trim().toUpperCase();
-
-  if (!certNo) {
-    if (msg) showFormMsg(msg, 'Please enter a certificate number.', 'error');
-    if (resultBox) resultBox.style.display = 'none';
-    return;
-  }
-
-  if (btn) {
-    btn.disabled = true;
-    btn.textContent = 'Verifying Record...';
-  }
-  if (msg) msg.style.display = 'none';
-  if (resultBox) resultBox.style.display = 'none';
-
-  setTimeout(() => {
-    const cert = REGISTERED_CERTIFICATES[certNo];
-
-    if (cert) {
-      // Populate fields on homepage verification box
-      const resCertNo = document.getElementById('resCertNo');
-      if (resCertNo) resCertNo.textContent = cert.certificate_no;
-      const resStudentName = document.getElementById('resStudentName');
-      if (resStudentName) resStudentName.textContent = cert.student_name;
-      const resCourseName = document.getElementById('resCourseName');
-      if (resCourseName) resCourseName.textContent = cert.course_name;
-      const resDuration = document.getElementById('resDuration');
-      if (resDuration) resDuration.textContent = cert.duration;
-      const resIssueDate = document.getElementById('resIssueDate');
-      if (resIssueDate) resIssueDate.textContent = cert.issue_date;
-      const resGrade = document.getElementById('resGrade');
-      if (resGrade) resGrade.textContent = cert.grade;
-      const resCenter = document.getElementById('resCenter');
-      if (resCenter) resCenter.textContent = cert.center_name;
-
-      // Populate fields on dedicated certificate page card
-      const cardCertNo = document.getElementById('cardCertNo');
-      if (cardCertNo) cardCertNo.textContent = cert.certificate_no;
-      const cardStudentName = document.getElementById('cardStudentName');
-      if (cardStudentName) cardStudentName.textContent = cert.student_name;
-      const cardCourseName = document.getElementById('cardCourseName');
-      if (cardCourseName) cardCourseName.textContent = cert.course_name;
-      const cardDuration = document.getElementById('cardDuration');
-      if (cardDuration) cardDuration.textContent = cert.duration;
-      const cardIssueDate = document.getElementById('cardIssueDate');
-      if (cardIssueDate) cardIssueDate.textContent = cert.issue_date;
-      const cardGrade = document.getElementById('cardGrade');
-      if (cardGrade) cardGrade.textContent = cert.grade;
-      const cardCenter = document.getElementById('cardCenter');
-      if (cardCenter) cardCenter.textContent = cert.center_name;
-      const cardTimestamp = document.getElementById('cardTimestamp');
-      if (cardTimestamp) cardTimestamp.textContent = 'Verified: ' + new Date().toLocaleString();
-
-      if (resultBox) resultBox.style.display = 'block';
-    } else {
-      if (msg) {
-        showFormMsg(msg, `No certificate found matching "${certNo}". Please check the certificate number or contact Master Computer Institute.`, 'error');
-      }
-    }
-
-    if (btn) {
-      btn.disabled = false;
-      btn.textContent = 'Verify Certificate';
-    }
-  }, 400);
-}
-
-// 5. Static Student Login Handler (Disabled in static architecture)
-function handleStaticStudentLogin(e) {
-  e.preventDefault();
-  const msg = document.getElementById('studentLoginMsg');
-  if (msg) {
-    showFormMsg(msg, 'Online student logins are currently disabled in this static release. Please contact your center front desk for batch schedules and study materials, or verify certificates via Certificate Verification.', 'info');
   }
 }
 

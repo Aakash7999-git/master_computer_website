@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Master Computer Institute offers practical computer education, professional courses (CCC, DCA, ADCA, Tally Prime GST), admissions, and certificate verification in Nawabganj, UP." />
+  <meta name="description" content="Master Computer Institute offers practical computer education, professional courses (CCC, DCA, ADCA, Tally Prime GST), and admissions in Nawabganj, UP. Affiliated with Yuva Prerna Foundation." />
   <title>Master Computer Institute | Premier Computer Education • Nawabganj</title>
   <link rel="icon" href="assets/logos/mci-logo.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css" />
@@ -109,7 +109,6 @@
           <li><a href="branches.html">Branches</a></li>
           <li><a href="admission.html">Admissions</a></li>
           <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="certificate-verification.html">Certificate Verification</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
@@ -686,48 +685,31 @@
       </div>
     </section>
 
-    <!-- Certificate Verification Section -->
-    <section class="section section-alt" id="certificate-verification">
+    <!-- NGO Affiliation Section -->
+    <section class="section section-alt" id="ngo-affiliation">
       <div class="container">
         <div class="section-heading reveal">
-          <span class="section-tag">Certificate verification</span>
-          <h2 class="section-title">Verify a certificate online</h2>
+          <span class="section-tag">Affiliation & Outreach</span>
+          <h2 class="section-title">Our NGO Affiliation</h2>
         </div>
 
-        <div class="verification-box reveal">
-          <form class="form-shell" onsubmit="handleStaticCertificateVerify(event, 'homeCertNumber', 'homeCertVerifyBtn', 'homeCertMsg', 'homeCertResultBox')" novalidate>
-            <div class="form-field">
-              <label for="homeCertNumber">Enter Certificate Number</label>
-              <input id="homeCertNumber" name="certificateNumber" type="text" required placeholder="e.g. MCI-CERT-10001" style="text-transform:uppercase;" />
-              <small style="color:var(--text-muted); display:block; margin-top:6px;">Sample registered certificates: <code>MCI-CERT-10001</code>, <code>MCI-CERT-10002</code>, <code>MCI-CERT-10003</code></small>
-            </div>
-            <div class="form-actions" style="justify-content:center; margin-top:18px;">
-              <button type="submit" id="homeCertVerifyBtn" class="btn btn-primary">Verify Certificate</button>
-            </div>
-            <div class="form-message" id="homeCertMsg" style="display:none; margin-top:16px;" aria-live="polite"></div>
-          </form>
-
-          <!-- Verified Results Box -->
-          <div id="homeCertResultBox" style="display:none; margin-top:20px; background:#fff; border:1px solid #22c55e; border-radius:12px; padding:24px; box-shadow:0 4px 12px rgba(34,197,94,0.1);">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-              <div style="width:48px; height:48px; border-radius:50%; background:rgba(34, 197, 94, 0.15); color:#16a34a; display:flex; align-items:center; justify-content:center; font-size:24px;">
-                <i class="bi bi-patch-check-fill"></i>
-              </div>
-              <div>
-                <h3 style="margin:0; font-size:18px; color:#16a34a;">Certificate Verified & Valid</h3>
-                <small style="color:var(--text-muted);">Official student record registered in institute database</small>
-              </div>
-            </div>
-
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; font-size:14px;">
-              <div><strong>Certificate No:</strong> <span id="resCertNo"></span></div>
-              <div><strong>Student Name:</strong> <span id="resStudentName"></span></div>
-              <div><strong>Course:</strong> <span id="resCourseName"></span></div>
-              <div><strong>Duration:</strong> <span id="resDuration"></span></div>
-              <div><strong>Issue Date:</strong> <span id="resIssueDate"></span></div>
-              <div><strong>Grade / Performance:</strong> <span id="resGrade"></span></div>
-              <div style="grid-column:1/-1;"><strong>Issuing Center:</strong> <span id="resCenter"></span></div>
-            </div>
+        <div class="affiliation-shell reveal" style="max-width:860px; margin:0 auto; background:#ffffff; border-radius:16px; border:1px solid var(--border); padding:36px; box-shadow:var(--shadow-sm); text-align:center;">
+          <div style="width:64px; height:64px; border-radius:50%; background:rgba(0, 102, 204, 0.1); color:var(--primary); display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 18px;">
+            <i class="bi bi-award-fill"></i>
+          </div>
+          <h3 style="font-size:24px; font-weight:700; margin:0 0 12px; color:var(--text);">Yuva Prerna Foundation</h3>
+          <p style="font-size:16px; line-height:1.7; color:var(--text-muted); max-width:720px; margin:0 auto 24px;">
+            Master Computer Institute is affiliated with Yuva Prerna Foundation, supporting the broader mission of education, youth empowerment and community development. Through this association, we aim to contribute to educational opportunities, skill development and positive social impact.
+          </p>
+          <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+            <a href="https://www.ypfngo.in/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:8px;">
+              <span>Visit Official NGO Website</span>
+              <i class="bi bi-box-arrow-up-right"></i>
+            </a>
+            <a href="about.html#ngo-affiliation" class="btn btn-outline" style="display:inline-flex; align-items:center; gap:8px;">
+              <span>Learn About Our Association</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -796,6 +778,9 @@
           <h4>Master Computer Institute</h4>
         </div>
         <p>Professional computer education and career-ready skill development in Nawabganj, UP.</p>
+        <p style="margin-top:8px; font-size:12px; color:var(--text-muted, #94a3b8);">
+          Affiliated with <a href="https://www.ypfngo.in/" target="_blank" rel="noopener noreferrer" style="color:var(--primary); text-decoration:underline;">Yuva Prerna Foundation</a>
+        </p>
         <div style="margin-top:14px; font-size:13px; color:var(--text-muted, #94a3b8);">
           <i class="bi bi-clock"></i> Mon - Sat: 8:00 AM - 6:00 PM
         </div>
@@ -815,10 +800,10 @@
       </div>
 
       <div>
-        <h4>Student Portal</h4>
+        <h4>Affiliation</h4>
         <ul>
-          <li><a href="login.html">Student Login</a></li>
-          <li><a href="certificate-verification.html">Certificate Verification</a></li>
+          <li><a href="https://www.ypfngo.in/" target="_blank" rel="noopener noreferrer"><i class="bi bi-patch-check"></i> Yuva Prerna Foundation</a></li>
+          <li><a href="about.html#ngo-affiliation">About Our Affiliation</a></li>
         </ul>
       </div>
 

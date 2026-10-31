@@ -8,9 +8,7 @@
 /branches.php                  /branches.html                  301
 /admission.php                 /admission.html                 301
 /gallery.php                   /gallery.html                   301
-/certificate-verification.php  /certificate-verification.html  301
 /contact.php                   /contact.html                   301
-/login.php                     /login.html                     301
 
 # Legacy subfolder mappings
 /html/about.html               /about.html                     301
@@ -19,10 +17,16 @@
 /html/branches.html            /branches.html                  301
 /html/admission.html           /admission.html                 301
 /html/gallery.html             /gallery.html                   301
-/html/certificate-verification.html /certificate-verification.html 301
 /html/contact.html             /contact.html                   301
-/html/login.html               /login.html                     301
 /html/404.html                 /404.html                       301
+
+# Decommissioned pages redirects to home
+/certificate-verification.php  /index.html                     301
+/certificate-verification.html /index.html                     301
+/login.php                     /index.html                     301
+/login.html                    /index.html                     301
+/html/certificate-verification.html /index.html                301
+/html/login.html               /index.html                     301
 
 # Admin and backend decommissioning redirects
 /admin/*                       /index.html                     301
@@ -31,4 +35,3 @@
 
 # Custom 404 fallback
 /*                             /404.html                       404
-

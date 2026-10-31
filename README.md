@@ -33,9 +33,7 @@ master-computer/
 ├── branches.html                  # Main Center & Extension Campus locations and details
 ├── admission.html                 # Online student admission enquiry application form
 ├── gallery.html                   # Campus gallery with filterable categories & lightbox modal
-├── certificate-verification.html  # Official student certificate verification portal
 ├── contact.html                   # Inbound visitor inquiries, address, phone & direct WhatsApp
-├── login.html                     # Student portal login screen
 ├── 404.html                       # Branded custom 404 page not found
 ├── _redirects                     # Netlify / Cloudflare Pages 301 redirects and fallback routing
 ├── vercel.json                    # Vercel deployment configuration
@@ -56,7 +54,7 @@ master-computer/
     ├── main.js                    # Navbar, mobile drawer, counter animations & gallery lightbox
     ├── animations.js              # Tilt scenes & interactive micro-animations
     ├── course-details.js          # Dynamic course parameter resolver for course-details.html
-    └── forms.js                   # Client-side form validation, WhatsApp routing & certificate lookup
+    └── forms.js                   # Client-side form validation, WhatsApp routing & enquiry handling
 ```
 
 ---
@@ -131,13 +129,10 @@ All forms (Course Enquiry modal, Admission Application, and Contact Us) are hand
 
 ---
 
-## 7. Certificate Verification System
+## 7. NGO Affiliation — Yuva Prerna Foundation
 
-The website includes an authentic certificate verification system in `js/forms.js`:
-- Supports instant lookup by certificate number (e.g., `MCI-CERT-10001`, `MCI-CERT-10002`, `MCI-CERT-10003`).
-- Displays student name, father's name, course completed, duration, issue date, grade, and center verification stamp upon a match.
-- Displays an accurate "No record found" alert when an invalid certificate number is entered.
-- To add newly issued student certificates, simply append new records to the `REGISTERED_CERTIFICATES` object in `js/forms.js`.
+Master Computer Institute is officially affiliated with **Yuva Prerna Foundation** (Official NGO website: [https://www.ypfngo.in/](https://www.ypfngo.in/)).
+Through this partnership, we support education, youth skill development, and community empowerment opportunities across Nawabganj and surrounding rural regions.
 
 ---
 
