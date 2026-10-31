@@ -1,0 +1,28 @@
+# Master Computer Institute - Static Deployment Redirects (Netlify / Cloudflare Pages)
+
+# Legacy PHP route redirects to clean static HTML
+/index.php                     /index.html                     301
+/about.php                     /about.html                     301
+/courses.php                   /courses.html                   301
+/course-details.php            /course-details.html            301
+/branches.php                  /branches.html                  301
+/admission.php                 /admission.html                 301
+/gallery.php                   /gallery.html                   301
+/certificate-verification.php  /certificate-verification.html  301
+/contact.php                   /contact.html                   301
+/login.php                     /login.html                     301
+
+# Legacy subfolder mappings
+/html/about.html               /about.html                     301
+/html/courses.html             /courses.html                   301
+/html/course-details.html      /course-details.html            301
+/html/branches.html            /branches.html                  301
+/html/admission.html           /admission.html                 301
+/html/gallery.html             /gallery.html                   301
+/html/certificate-verification.html /certificate-verification.html 301
+/html/contact.html             /contact.html                   301
+/html/login.html               /login.html                     301
+/html/404.html                 /404.html                       301
+
+# Custom 404 fallback
+/*                             /404.html                       404

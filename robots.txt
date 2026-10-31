@@ -1,11 +1,6 @@
 # Master Computer Institute - robots.txt
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /api/
-Disallow: /config/
-Disallow: /includes/
-Disallow: /database/
 
-# Sitemaps
+# Sitemap
 Sitemap: https://mastercomputerinstitute.in/sitemap.xml

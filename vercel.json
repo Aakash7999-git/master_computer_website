@@ -1,0 +1,17 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/index.php", "destination": "/index.html", "permanent": true },
+    { "source": "/about.php", "destination": "/about.html", "permanent": true },
+    { "source": "/courses.php", "destination": "/courses.html", "permanent": true },
+    { "source": "/course-details.php", "destination": "/course-details.html", "permanent": true },
+    { "source": "/branches.php", "destination": "/branches.html", "permanent": true },
+    { "source": "/admission.php", "destination": "/admission.html", "permanent": true },
+    { "source": "/gallery.php", "destination": "/gallery.html", "permanent": true },
+    { "source": "/certificate-verification.php", "destination": "/certificate-verification.html", "permanent": true },
+    { "source": "/contact.php", "destination": "/contact.html", "permanent": true },
+    { "source": "/login.php", "destination": "/login.html", "permanent": true },
+    { "source": "/html/:page", "destination": "/:page", "permanent": true }
+  ]
+}

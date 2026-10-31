@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Learn about Master Computer Institute, our mission, vision and leadership under Director Shivam Pandey in Nawabganj, UP." />
+  <title>About Us | Master Computer Institute</title>
+  <link rel="icon" href="assets/logos/mci-logo.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <style>
+    .mci-enquire-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .mci-enquire-modal.is-active {
+      display: flex;
+    }
+    .mci-modal-dialog {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      animation: modalFadeIn 0.3s ease;
+    }
+    @keyframes modalFadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .mci-modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border, #e2e8f0);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+    }
+    .mci-modal-header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text, #0f172a);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mci-modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-muted, #64748b);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+    .mci-modal-body {
+      padding: 24px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div>Master Computer Institute • Nawabganj, Uttar Pradesh (271303)</div>
+      <div class="topbar-links">
+        <a href="https://www.instagram.com/master.computer1/" target="_blank" rel="noopener noreferrer">
+          <i class="bi bi-instagram"></i> @master.computer1
+        </a>
+        <a href="https://mastercomputerinstitute.blogspot.com" target="_blank" rel="noopener noreferrer">
+          <i class="bi bi-globe"></i> Official Blog
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a class="nav-logo" href="index.html" aria-label="Master Computer Institute home">
+        <span class="nav-logo-mark"><img src="assets/logos/mci-logo.svg" alt="Master Computer Institute Logo" /></span>
+        <span class="nav-logo-text">MASTER<br />COMPUTER<br />INSTITUTE</span>
+      </a>
+
+      <nav aria-label="Main navigation">
+        <ul class="nav-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a class="active" href="about.html">About</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="branches.html">Branches</a></li>
+          <li><a href="admission.html">Admissions</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="certificate-verification.html">Certificate Verification</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions" id="authNavActions">
+        <button type="button" class="btn btn-primary" onclick="openEnquireModal()">Enquire Now</button>
+      </div>
+
+      <button class="mobile-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumbs"><a href="index.html">Home</a> / <span>About</span></div>
+        <h1>About Master Computer Institute</h1>
+        <p>Professional computer learning, modern digital skills, and student-focused education in Nawabganj, UP.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid-2">
+        <div class="about-text reveal">
+          <p>Master Computer Institute is a dedicated computer education center located in Nawabganj, Uttar Pradesh (PIN 271303). Our mission is to make technology and digital skills accessible, practical, and career-oriented for students and learners.</p>
+          <p>We emphasize hands-on computer practice, foundational computer literacy, software tools, and guided learning to help students build confidence and real-world digital capabilities.</p>
+          <ul class="points-list">
+            <li><i class="bi bi-check-circle-fill"></i> Practical, career-oriented computer education</li>
+            <li><i class="bi bi-check-circle-fill"></i> Supportive and structured learning environment</li>
+            <li><i class="bi bi-check-circle-fill"></i> Located in Nawabganj, Uttar Pradesh (near Tripathi Hospital)</li>
+            <li><i class="bi bi-check-circle-fill"></i> Dedicated computer lab sessions and personal guidance</li>
+          </ul>
+          <div style="margin-top:24px;">
+            <button type="button" class="btn btn-primary" onclick="openEnquireModal()">Enquire Now</button>
+          </div>
+        </div>
+        <div class="about-visual reveal">
+          <img src="assets/images/classroom/classroom-training-01.png"
+            alt="Master Computer Institute classroom training with students" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-tag">Director</span>
+          <h2 class="section-title">Leadership</h2>
+        </div>
+        <div class="director-box reveal" style="max-width: 700px; margin: 0 auto;">
+          <div class="director-avatar-placeholder"
+            style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg, #f59e0b, #d97706); display:flex; align-items:center; justify-content:center; color:#fff; font-size:26px; font-weight:700; flex-shrink:0;">
+            SP
+          </div>
+          <div>
+            <h4>Shivam Pandey</h4>
+            <p>Director, Master Computer Institute</p>
+            <small style="color:var(--text-muted, #64748b);">Nawabganj, Uttar Pradesh - 271303</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-tag">Mission & Vision</span>
+          <h2 class="section-title">Our guiding principles</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <div class="feature-icon"><i class="bi bi-bullseye"></i></div>
+            <h3>Mission</h3>
+            <p>To deliver high-quality, practical computer education that helps students gain confidence, digital literacy, and real-world skills.</p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-icon"><i class="bi bi-eye"></i></div>
+            <h3>Vision</h3>
+            <p>To empower youth and learners in Nawabganj with modern computer and IT skills for educational and career advancement.</p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-icon"><i class="bi bi-star-fill"></i></div>
+            <h3>Why choose us</h3>
+            <p>We focus on direct computer lab practice, accessible teaching, and student-first guidance.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-brand" style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+          <img src="assets/logos/mci-logo.svg" alt="Master Computer Institute Logo" />
+          <h4>Master Computer Institute</h4>
+        </div>
+        <p>Professional computer education and career-ready skill development in Nawabganj, UP.</p>
+        <div style="margin-top:14px; font-size:13px; color:var(--text-muted, #94a3b8);">
+          <i class="bi bi-clock"></i> Mon - Sat: 8:00 AM - 6:00 PM
+        </div>
+      </div>
+
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="admission.html">Admissions</a></li>
+          <li><a href="branches.html">Branches</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Student Portal</h4>
+        <ul>
+          <li><a href="login.html">Student Login</a></li>
+          <li><a href="certificate-verification.html">Certificate Verification</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Location</h4>
+        <ul>
+          <li><a href="branches.html">Nawabganj Center</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="tel:+919696525287"><i class="bi bi-telephone"></i> +91 9696525287</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div>© 2026 Master Computer Institute. All Rights Reserved.</div>
+      <div>Director: Shivam Pandey</div>
+      <div class="socials">
+        <a href="https://www.instagram.com/master.computer1/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <i class="bi bi-instagram"></i>
+        </a>
+        <a href="https://mastercomputerinstitute.blogspot.com" target="_blank" rel="noopener noreferrer" aria-label="Official Blog">
+          <i class="bi bi-globe"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Global Enquire Modal -->
+  <div class="mci-enquire-modal" id="enquireModal" aria-hidden="true" role="dialog" aria-labelledby="enquireModalTitle">
+    <div class="mci-modal-dialog">
+      <div class="mci-modal-header">
+        <h3 id="enquireModalTitle"><i class="bi bi-chat-left-quote-fill" style="color:var(--primary, #1e3a8a);"></i> Course Enquiry</h3>
+        <button type="button" class="mci-modal-close" onclick="closeEnquireModal()" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="mci-modal-body">
+        <p style="margin:0 0 18px; font-size:13px; color:var(--text-muted, #64748b);">
+          Fill in your details below to enquire about courses, batch timings, and fee installment plans at Master Computer Institute.
+        </p>
+
+        <form id="publicEnquiryModalForm" onsubmit="handleStaticEnquiry(event)" novalidate>
+          <div class="form-grid">
+            <div class="form-field full">
+              <label for="modalEnqFullName">Your Full Name *</label>
+              <input id="modalEnqFullName" name="fullName" type="text" required placeholder="Enter your full name" />
+            </div>
+
+            <div class="form-field">
+              <label for="modalEnqMobile">Mobile Number *</label>
+              <input id="modalEnqMobile" name="mobile" type="tel" required placeholder="10-digit mobile number" />
+            </div>
+
+            <div class="form-field">
+              <label for="modalEnqEmail">Email Address</label>
+              <input id="modalEnqEmail" name="email" type="email" placeholder="name@example.com" />
+            </div>
+
+            <div class="form-field full">
+              <label for="modalEnqCourse">Selected Course *</label>
+              <select id="modalEnqCourse" name="course" required>
+                <option value="">-- Choose Course --</option>
+                <option value="CCC — Course on Computer Concepts">CCC — Course on Computer Concepts (3 Months - ₹3,499)</option>
+                <option value="DCA — Diploma in Computer Applications">DCA — Diploma in Computer Applications (6 Months - ₹6,499)</option>
+                <option value="ADCA — Advanced Diploma in Computer Applications">ADCA — Advanced Diploma in Computer Applications (12 Months - ₹11,999)</option>
+                <option value="Tally Prime + GST">Tally Prime + GST (3 Months - ₹7,999)</option>
+                <option value="Advanced Excel & MIS">Advanced Excel & MIS (2 Months - ₹3,999)</option>
+                <option value="Graphic Designing">Graphic Designing (4 Months - ₹9,999)</option>
+                <option value="Digital Marketing">Digital Marketing (4 Months - ₹10,499)</option>
+                <option value="Computer Fundamentals & Typing">Computer Fundamentals & Typing (2 Months - ₹2,999)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="modalEnqBranch">Center Location</label>
+              <select id="modalEnqBranch" name="branch">
+                <option value="Master Computer Institute — Nawabganj">Master Computer Institute — Nawabganj</option>
+                <option value="Master Computer Institute — Extension Campus">Master Computer Institute — Extension Campus</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="modalEnqBatch">Preferred Batch</label>
+              <select id="modalEnqBatch" name="batch">
+                <option value="Morning">Morning Batch</option>
+                <option value="Evening">Evening Batch</option>
+                <option value="Weekend">Weekend Batch</option>
+              </select>
+            </div>
+
+            <div class="form-field full">
+              <label for="modalEnqMessage">Message or Questions</label>
+              <textarea id="modalEnqMessage" name="message" rows="3" placeholder="Tell us what you would like to know..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-message" id="modalEnquiryMessage" style="display:none; margin:16px 0;" aria-live="polite"></div>
+
+          <div class="form-actions" style="margin-top:20px;">
+            <button type="submit" id="modalEnqSubmitBtn" class="btn btn-primary" style="width:100%; display:flex; justify-content:center; align-items:center; gap:8px;">
+              <span>Submit Enquiry</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/forms.js"></script>
+</body>
+</html>
