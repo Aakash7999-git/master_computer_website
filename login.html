@@ -131,24 +131,31 @@
             <div style="width:54px; height:54px; border-radius:50%; background:rgba(30, 58, 138, 0.1); color:var(--primary, #1e3a8a); display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 12px;">
               <i class="bi bi-person-badge-fill"></i>
             </div>
-            <h3 style="margin:0 0 6px;">Student Portal Login</h3>
-            <p style="color:var(--text-muted); font-size:13px; margin:0;">Access your learning schedule and course certificates</p>
+            <h3 style="margin:0 0 6px;">Student Portal</h3>
+            <p style="color:var(--text-muted); font-size:13px; margin:0 0 12px;">Student resources and certificate verification</p>
+            <span style="display:inline-block; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600; background:#fef3c7; color:#92400e; border:1px solid #fde68a;">
+              <i class="bi bi-clock-history"></i> Online Portal Offline • On-Campus Service Active
+            </span>
+          </div>
+
+          <div style="margin-bottom:18px; padding:12px 14px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; font-size:12px; line-height:1.5; color:#1e40af;">
+            <strong><i class="bi bi-info-circle-fill"></i> Portal Status:</strong> In accordance with our static website architecture, online student portal logins are currently disabled. Enrolled students can obtain batch schedules, study material, and receipts directly from the center front desk. To verify course certificates, please use the public verification tool below.
           </div>
 
           <form id="studentLoginForm" onsubmit="handleStaticStudentLogin(event)" novalidate>
             <div class="form-grid" style="grid-template-columns: 1fr;">
               <div class="form-field">
                 <label for="studentUser">Student ID or Email</label>
-                <input id="studentUser" name="studentUser" type="text" required placeholder="e.g. demo.student@example.com" />
+                <input id="studentUser" name="studentUser" type="text" disabled placeholder="Portal currently offline" />
               </div>
               <div class="form-field">
                 <label for="studentPassword">Password</label>
-                <input id="studentPassword" name="studentPassword" type="password" required placeholder="Enter password" />
+                <input id="studentPassword" name="studentPassword" type="password" disabled placeholder="••••••••" />
               </div>
             </div>
 
             <div class="form-actions" style="margin-top:20px;">
-              <button type="submit" id="studentLoginBtn" class="btn btn-primary" style="width:100%;">Sign In as Student</button>
+              <button type="submit" id="studentLoginBtn" class="btn btn-primary" style="width:100%; opacity:0.65; cursor:not-allowed;" disabled>Portal Currently Offline</button>
             </div>
 
             <div class="form-message" id="studentLoginMsg" style="display:none; margin-top:16px;" aria-live="polite"></div>
@@ -160,7 +167,7 @@
           </form>
 
           <div style="margin-top:24px; padding:14px; background:#f8fafc; border-radius:8px; border:1px solid var(--border); font-size:12px; color:var(--text-muted);">
-            <strong><i class="bi bi-info-circle"></i> Institute Notice:</strong> Newly enrolled students receive their portal credentials directly upon center admission confirmation. If you haven't received your credentials yet, please contact the center office.
+            <strong><i class="bi bi-building"></i> Center Office Assistance:</strong> Need assistance with your enrollment, fees, or class timings? Visit the Main Center at Nawabganj or reach our help desk via WhatsApp at <strong>+91 9696525287</strong>.
           </div>
         </div>
       </div>
@@ -313,3 +320,4 @@
   <script src="js/forms.js"></script>
 </body>
 </html>
+

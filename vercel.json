@@ -12,6 +12,9 @@
     { "source": "/certificate-verification.php", "destination": "/certificate-verification.html", "permanent": true },
     { "source": "/contact.php", "destination": "/contact.html", "permanent": true },
     { "source": "/login.php", "destination": "/login.html", "permanent": true },
-    { "source": "/html/:page", "destination": "/:page", "permanent": true }
+    { "source": "/html/:page", "destination": "/:page", "permanent": true },
+    { "source": "/admin/:path*", "destination": "/index.html", "permanent": true },
+    { "source": "/admin", "destination": "/index.html", "permanent": true }
   ]
 }
+

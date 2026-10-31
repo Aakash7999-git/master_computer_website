@@ -391,22 +391,12 @@ function handleStaticCertificateVerify(e, inputId, btnId, msgId, resultBoxId) {
   }, 400);
 }
 
-// 5. Static Student Login Handler
+// 5. Static Student Login Handler (Disabled in static architecture)
 function handleStaticStudentLogin(e) {
   e.preventDefault();
-  const form = e.target;
-  const user = (form.studentUser?.value || '').trim();
-  const pass = (form.studentPassword?.value || '').trim();
   const msg = document.getElementById('studentLoginMsg');
-
-  if (!user || !pass) {
-    if (msg) showFormMsg(msg, 'Please enter both your student ID/email and password.', 'error');
-    return;
-  }
-
-  if (user.toLowerCase() === 'demo.student@example.com' || user.toLowerCase() === 'student') {
-    if (msg) showFormMsg(msg, 'Student authentication verified. Welcome to Master Computer Institute student resources!', 'success');
-  } else {
-    if (msg) showFormMsg(msg, 'Invalid student credentials. Please check your Student ID or contact the institute office.', 'error');
+  if (msg) {
+    showFormMsg(msg, 'Online student logins are currently disabled in this static release. Please contact your center front desk for batch schedules and study materials, or verify certificates via Certificate Verification.', 'info');
   }
 }
+
