@@ -8,6 +8,7 @@
 /branches.php                  /branches.html                  301
 /admission.php                 /admission.html                 301
 /gallery.php                   /gallery.html                   301
+/affiliation.php               /affiliation.html               301
 /contact.php                   /contact.html                   301
 
 # Legacy subfolder mappings
@@ -17,6 +18,7 @@
 /html/branches.html            /branches.html                  301
 /html/admission.html           /admission.html                 301
 /html/gallery.html             /gallery.html                   301
+/html/affiliation.html         /affiliation.html               301
 /html/contact.html             /contact.html                   301
 /html/404.html                 /404.html                       301
 

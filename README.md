@@ -33,6 +33,7 @@ master-computer/
 ├── branches.html                  # Main Center & Extension Campus locations and details
 ├── admission.html                 # Online student admission enquiry application form
 ├── gallery.html                   # Campus gallery with filterable categories & lightbox modal
+├── affiliation.html               # Dedicated Yuva Prerna Foundation NGO affiliation landing page
 ├── contact.html                   # Inbound visitor inquiries, address, phone & direct WhatsApp
 ├── 404.html                       # Branded custom 404 page not found
 ├── _redirects                     # Netlify / Cloudflare Pages 301 redirects and fallback routing

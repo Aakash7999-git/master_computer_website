@@ -9,6 +9,7 @@
     { "source": "/branches.php", "destination": "/branches.html", "permanent": true },
     { "source": "/admission.php", "destination": "/admission.html", "permanent": true },
     { "source": "/gallery.php", "destination": "/gallery.html", "permanent": true },
+    { "source": "/affiliation.php", "destination": "/affiliation.html", "permanent": true },
     { "source": "/contact.php", "destination": "/contact.html", "permanent": true },
     { "source": "/certificate-verification.php", "destination": "/index.html", "permanent": true },
     { "source": "/certificate-verification.html", "destination": "/index.html", "permanent": true },
