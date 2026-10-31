@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const pageLinks = document.querySelectorAll('.nav-menu a');
-  const currentPath = window.location.pathname.split('/').pop() || 'index.php';
+  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
   const pagePrefix = '';
   const hashLinks = [...pageLinks].filter((link) => link.getAttribute('href')?.startsWith('#'));
 
@@ -93,14 +93,14 @@ document.addEventListener('DOMContentLoaded', function () {
   } else {
     pageLinks.forEach((link) => {
       const href = link.getAttribute('href');
-      link.classList.toggle('active', href === currentPath || (currentPath === '' && (href === 'index.php' || href === 'index.html')));
+      link.classList.toggle('active', href === currentPath || (currentPath === '' && (href === 'index.html' || href === 'index.html')));
     });
   }
 
   document.querySelectorAll('.footer-grid > div:nth-child(2) ul').forEach((quickLinks) => {
     if ([...quickLinks.querySelectorAll('a')].some((link) => (link.getAttribute('href') || '').includes('gallery'))) return;
     const galleryItem = document.createElement('li');
-    galleryItem.innerHTML = `<a href="${pagePrefix}gallery.php">Gallery</a>`;
+    galleryItem.innerHTML = `<a href="${pagePrefix}gallery.html">Gallery</a>`;
     const admissionsLink = [...quickLinks.querySelectorAll('a')].find((link) => (link.getAttribute('href') || '').includes('admission'));
     admissionsLink?.parentElement.before(galleryItem);
   });

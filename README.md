@@ -1,6 +1,6 @@
-# Master Computer Institute — Database-Driven Web Application & Admin Portal
+# Master Computer Institute — Official Website
 
-Official web application and comprehensive institute management portal for **Master Computer Institute**, located near Tripathi Hospital, Nawabganj, Uttar Pradesh (PIN 271303), India, under the directorship of **Shivam Pandey**.
+Official website for **Master Computer Institute**, premier computer training center located near Tripathi Hospital, Nawabganj, Uttar Pradesh (PIN 271303), India, under the directorship of **Shivam Pandey**.
 
 - **Official Instagram**: [@master.computer1](https://www.instagram.com/master.computer1/)
 - **Official Blog**: [mastercomputerinstitute.blogspot.com](https://mastercomputerinstitute.blogspot.com)
@@ -9,34 +9,16 @@ Official web application and comprehensive institute management portal for **Mas
 
 ## 1. Project Overview & Architecture
 
-This repository upgrades the original frontend into a fully database-driven, production-ready web application built natively with **Core PHP 8+**, **MySQL / MariaDB**, **Vanilla JavaScript Fetch API**, and **Bootstrap Icons**, designed to run directly on **Apache via XAMPP**.
+The website is a **100% static, frontend-only, production-ready web application** built with clean HTML5, CSS3, Vanilla JavaScript, and Bootstrap Icons. It is completely decoupled from any server-side runtime, PHP processing, or MySQL database, making it exceptionally fast, secure, lightweight, and deployable to any static web host, CDN, or custom domain.
 
-### Key Features
-- **Public Website (PHP & AJAX)**:
-  - Responsive multi-page institute website preserving original brand typography, colors, animations, and layouts.
-  - Dynamically rendered courses catalog, center location details, and campus gallery loaded directly from MySQL.
-  - Universal **"Enquire Now"** call-to-actions across the header, course cards, and hero sections with pre-populated course selectors and AJAX submission.
-  - Online admission application form with asynchronous database persistence.
-  - Real-time online certificate verification with prepared statement validation and formatted student credentials.
-  - Direct contact inquiry submission and WhatsApp integration.
-- **Admin Portal (`/admin/`)**:
-  - Secure session-based authentication using `password_hash()` (Bcrypt) and `password_verify()`.
-  - Session regeneration on login, strict HTTP-only cookies, and CSRF token verification.
-  - Login attempt rate limiting to prevent brute-force attacks.
-  - Live statistics dashboard (total enquiries, website vs offline breakdown, admissions, active enrolled students, pending follow-ups, active courses, unread messages).
-  - Quick action buttons on dashboard: `+ Add Enquiry` and `+ Register Student` for rapid offline walk-in entry.
-  - **Offline Walk-in Enquiries**: Record walk-in visitor details directly from admin dashboard and enquiries page (`source = 'Offline'`), with automated reference code generation (`MCI-ENQ-XXXX`) and staff notes.
-  - **Offline Student Admissions**: Register walk-in admissions (`source = 'Offline'`) directly from admin dashboard or admissions page with safe code generation (`MCI-ADM-XXXX`).
-  - **Student Management (`/admin/students.php`)**: Dedicated student roster tracking active, completed, and dropped students (`MCI-STU-XXXX`), linked to admissions, with idempotent enrollment (zero duplicate students), full profile view, editable details, and CSV export.
-  - Source filtering across enquiries, admissions, and students (`Website` vs `Offline`).
-  - Search, multi-criteria filtering, pagination, status transitions, internal notes, and one-click CSV export for enquiries, admissions, and students.
-  - Complete course management (add, edit curriculum, fees, duration, activate/deactivate).
-  - Branch and center location management.
-  - Contact message review and email/WhatsApp direct reply actions.
-  - Certificate management (issue, modify, revoke, or verify student records).
-  - Gallery photo management with secure MIME-type validation, file size limits, and randomized filenames.
-  - Configurable institute settings (phones, emails, address, social media links).
-  - Immutable administrator audit activity logs.
+### Key Highlights
+- **100% Preserved UI & Design**: Pixel-for-pixel preservation of all brand colors, typography, responsive grid layouts, Swiper carousels, and smooth animations.
+- **Zero Backend Dependencies**: Operates entirely client-side without PHP, MySQL, Apache XAMPP, or Node.js runtime requirements.
+- **Universal "Enquire Now" Modal**: Available on every page and course card, prefilling the selected course and connecting inquiries via WhatsApp and configurable form services (Formspree).
+- **Interactive Certificate Verification**: Real-time client-side verification of official student certificate credentials against registered institute records.
+- **Dynamic Course Details**: Single lightweight template (`course-details.html`) that seamlessly renders syllabus, pricing, and duration for any of the 8 certified courses via query parameters (`?course=adca`, `?course=ccc`, etc.).
+- **Direct WhatsApp Helpline**: Floating WhatsApp button and fallback routing ensuring no student inquiry is ever missed.
+- **Static Hosting Ready**: Includes pre-configured redirects for Netlify (`_redirects`), Vercel (`vercel.json`), XML sitemap (`sitemap.xml`), and custom 404 handler (`404.html`).
 
 ---
 
@@ -44,185 +26,119 @@ This repository upgrades the original frontend into a fully database-driven, pro
 
 ```text
 master-computer/
-├── index.php                      # Dynamic homepage with courses, enquiry & verification
-├── about.php                      # About institute, leadership & vision
-├── courses.php                    # All active computer courses catalog
-├── course-details.php             # Individual course syllabus, fee & enquiry trigger
-├── branches.php                   # Center locations & physical addresses
-├── admission.php                  # Online admission application form
-├── gallery.php                    # Filterable student photo gallery
-├── certificate-verification.php   # Public certificate validation portal
-├── contact.php                    # Inbound contact & inquiries page
-├── login.php                      # Student portal login screen
-├── index.html                     # Legacy compatibility entry (auto-redirects to index.php)
-├── config/
-│   ├── app.php                    # Session security, CSRF protection, base URL resolution
-│   └── database.php               # PDO MySQL database connection module
-├── includes/
-│   ├── header.php                 # Shared public topbar, navigation & branding
-│   ├── footer.php                 # Shared public footer, "Admin Dashboard" link & enquiry modal
-│   └── functions.php              # Global helpers, security sanitizers & auth guards
-├── admin/
-│   ├── login.php                  # Secure database-backed administrator login
-│   ├── logout.php                 # Session invalidation & cookie cleanup
-│   ├── setup.php                  # First-admin initialization CLI / Web setup
-│   ├── dashboard.php              # Live statistics overview, quick actions & modals
-│   ├── enquiries.php              # Enquiry search, filter, manual offline entry & export
-│   ├── admissions.php             # Admission review, offline registration & export
-│   ├── students.php               # Dedicated enrolled students roster & profile management
-│   ├── courses.php                # Course catalog creation, pricing & status
-│   ├── branches.php               # Center branch information & contacts
-│   ├── contacts.php               # Inbound visitor messages & direct replies
-│   ├── certificates.php           # Student certificate issuance & revocation
-│   ├── gallery.php                # Gallery photo uploads & category management
-│   ├── settings.php               # Institute contact info & social link settings
-│   └── includes/
-│       ├── header.php             # Admin sidebar layout & live badge counters
-│       └── footer.php             # Admin modal containers & toast notification system
-├── api/
-│   ├── enquiry.php                # Public course enquiry AJAX endpoint
-│   ├── admission.php              # Public online admission enquiry AJAX endpoint
-│   ├── contact.php                # Public contact message AJAX endpoint
-│   ├── certificate.php            # Public certificate verification AJAX endpoint
-│   ├── dashboard.php              # Protected admin metrics API
-│   ├── enquiries.php              # Protected admin enquiry CRUD, offline creation & export
-│   ├── admissions.php             # Protected admin admission CRUD, offline registration & export
-│   ├── students.php               # Protected admin student CRUD, profile updates & export
-│   ├── courses.php                # Protected admin course CRUD API
-│   ├── branches.php               # Protected admin branch CRUD API
-│   ├── certificates.php           # Protected admin certificate CRUD API
-│   ├── gallery.php                # Protected admin gallery upload & CRUD API
-│   └── admin-actions.php          # Protected settings, message status & audit logs
-├── database/
-│   └── master_computer.sql        # Full MySQL schema, indexes, FKs, students table & seed data
-├── assets/                        # Images, logos, fonts, vendor CSS/JS
-├── css/                           # Core styles (style.css, responsive.css, animations.css, admin.css)
-└── js/                            # Core scripts (main.js, animations.js, admin.js)
+├── index.html                     # Homepage with hero, courses, branches, gallery, verification & contact
+├── about.html                     # About institute, leadership (Director Shivam Pandey) & mission
+├── courses.html                   # All 8 computer courses catalog with durations & pricing
+├── course-details.html            # Course syllabus, details, summary box & enquiry action
+├── branches.html                  # Main Center & Extension Campus locations and details
+├── admission.html                 # Online student admission enquiry application form
+├── gallery.html                   # Campus gallery with filterable categories & lightbox modal
+├── contact.html                   # Inbound visitor inquiries, address, phone & direct WhatsApp
+├── 404.html                       # Branded custom 404 page not found
+├── _redirects                     # Netlify / Cloudflare Pages 301 redirects and fallback routing
+├── vercel.json                    # Vercel deployment configuration
+├── robots.txt                     # SEO search engine crawl directives
+├── sitemap.xml                    # Complete XML sitemap for search indexation
+├── assets/
+│   ├── fonts/                     # Inter & Poppins web fonts
+│   ├── images/                    # Classrooms, campus gallery, hero graphics, course thumbnails
+│   ├── logos/                     # Official vector logo (mci-logo.svg)
+│   └── vendor/
+│       ├── bootstrap-icons/       # Bootstrap Icons fonts & styles
+│       └── swiper/                # Swiper carousel bundle
+├── css/
+│   ├── style.css                  # Core design tokens, typography, grid & component styles
+│   ├── responsive.css             # Mobile, tablet & desktop viewport breakpoints
+│   └── animations.css             # Scroll reveals, floating badges & hover transitions
+└── js/
+    ├── main.js                    # Navbar, mobile drawer, counter animations & gallery lightbox
+    ├── animations.js              # Tilt scenes & interactive micro-animations
+    ├── course-details.js          # Dynamic course parameter resolver for course-details.html
+    └── forms.js                   # Client-side form validation, WhatsApp routing & enquiry handling
 ```
 
-> **Note on Project Cleanup (Phase 14)**: Legacy static `.html` files in `html/`, legacy mock auth scripts, and redundant duplicate assets in `frontend/` (~50 MB) were audited, backed up, and safely pruned. All active views run natively on PHP 8+ with prepared MySQL queries and asynchronous AJAX requests.
+---
+
+## 3. Courses Offered
+
+| Course Code | Full Course Title | Duration | Category |
+| :--- | :--- | :--- | :--- |
+| **CCC** | CCC — Course on Computer Concepts | 3 Months | Govt. Recognized |
+| **DCA** | DCA — Diploma in Computer Applications | 6 Months | Diploma |
+| **ADCA** | ADCA — Advanced Diploma in Computer Applications | 12 Months | Advanced Diploma |
+| **TALLY** | Tally Prime + GST | 3 Months | Accounting |
+| **EXCEL** | Advanced Excel & MIS | 2 Months | Office Skills |
+| **GRAPHIC** | Graphic Designing (Photoshop & CorelDRAW) | 4 Months | Creative |
+| **DIGITAL-MKT** | Digital Marketing & SEO | 4 Months | Marketing |
+| **FUNDAMENTALS** | Computer Fundamentals & Typing (Hindi & English) | 2 Months | Foundation |
 
 ---
 
-## 3. Step-by-Step Installation on XAMPP (Windows)
+## 4. Local Testing & Verification
 
-### Step 1: Install & Start XAMPP
-1. Download and install **XAMPP for Windows** (with PHP 8.0+) from [apachefriends.org](https://www.apachefriends.org/).
-2. Open the **XAMPP Control Panel**.
-3. Click **Start** next to both **Apache** and **MySQL**. Verify that both show green status indicators.
+Because this is a pure static website, you do not need Apache or MySQL to test it:
 
-### Step 2: Copy the Project into XAMPP Web Root
-1. Copy the project folder into your XAMPP `htdocs` directory:
-   ```text
-   C:\xampp\htdocs\master-computer
-   ```
-2. Ensure file permissions allow Apache to read project files and write to `assets/images/gallery/` for uploads.
+### Method A: Direct Browser Preview
+Double-click `index.html` to open it in any web browser (Chrome, Edge, Firefox, Safari).
 
-### Step 3: Import the MySQL Database
-1. Open your web browser and navigate to:
-   ```text
-   http://localhost/phpmyadmin
-   ```
-2. Click **New** in the left sidebar and enter the database name:
-   ```text
-   master_computer_institute
-   ```
-   Choose collation: `utf8mb4_unicode_ci` and click **Create**.
-3. Select the `master_computer_institute` database, click the **Import** tab.
-4. Click **Choose File**, select `database/master_computer.sql` located inside the project, and click **Import** (or **Go**).
-5. Alternatively, import via Windows Command Prompt / PowerShell:
-   ```powershell
-   Get-Content "C:\xampp\htdocs\master-computer\database\master_computer.sql" | & "C:\xampp\mysql\bin\mysql.exe" -u root
-   ```
+### Method B: Any Local Static Server (Python, Node, or VS Code Live Server)
+```bash
+# Python 3
+python -m http.server 8080
 
-### Step 4: Verify Database Connection
-1. Open `config/database.php` in a text editor.
-2. The default XAMPP settings are pre-configured:
-   ```php
-   define('DB_HOST', 'localhost');
-   define('DB_NAME', 'master_computer_institute');
-   define('DB_USER', 'root');
-   define('DB_PASS', '');
-   ```
-3. If your MySQL server uses a custom password or port, adjust these settings accordingly.
-
-### Step 5: Administrator Setup
-1. Open your browser and navigate to the admin setup tool:
-   ```text
-   http://localhost/master-computer/admin/setup.php
-   ```
-   *Or run via CLI*:
-   ```powershell
-   & "C:\xampp\php\php.exe" "C:\xampp\htdocs\master-computer\admin\setup.php"
-   ```
-2. The default initial administrative credentials are:
-   - **Username**: `admin`
-   - **Email**: `admin@mastercomputer.edu`
-   - **Password**: `Admin@MCI2026!`
-3. After setup or updating passwords, click **Lock Setup Script** for security.
-
-### Step 6: Access the Application
-- **Public Website**: [http://localhost/master-computer/](http://localhost/master-computer/)
-- **Admin Login Portal**: [http://localhost/master-computer/admin/login.php](http://localhost/master-computer/admin/login.php)
-- **Admin Dashboard Link**: Accessible directly from the footer of any page under the **Student & Admin** column.
+# Or Node npx serve
+npx serve .
+```
+Then visit `http://localhost:8080` in your browser.
 
 ---
 
-## 4. Testing & Verification Guide
+## 5. Deployment Options
 
-| Test Scenario | Action | Expected Result |
-| :--- | :--- | :--- |
-| **Public Browsing** | Open `index.php`, `about.php`, `courses.php`, `branches.php` | Pages load with 200 OK, full layout and styling preserved. |
-| **Enquire Now CTAs** | Click any "Enquire Now" button on header or course cards | Modal opens with the selected course automatically pre-filled. |
-| **Enquiry Submission** | Fill name, valid 10-digit phone, and click Submit | Asynchronous AJAX insert into MySQL `enquiries` table, success banner displayed. |
-| **Online Admission** | Submit application on `admission.php` | Validated on client and server, stored in `admissions` table with `MCI-ADM-XXXX` code. |
-| **Certificate Lookup** | Search `MCI-CERT-10001` on verification page | Returns authentic certificate card with course and student name. |
-| **Invalid Certificate** | Search `MCI-CERT-99999` | Returns clean 404 error: "No certificate found matching...". |
-| **Protected Dashboard** | Visit `/admin/dashboard.php` without logging in | HTTP 302 redirect directly to `/admin/login.php`. |
-| **Admin Authentication** | Log in with `admin` / `Admin@MCI2026!` | Session regenerated, redirects to dashboard with live statistics. |
-| **Invalid Credentials** | Attempt login with incorrect password | Generic error message, failed attempt recorded for rate limiting. |
-| **Enquiry Management** | Filter by status "New", change status to "Contacted", add notes | Changes persist in MySQL and update live counters without reload. |
-| **CSV Export** | Click "Export CSV" on enquiries, admissions or students | Downloads UTF-8 encoded `.csv` file with current filter criteria. |
-| **Offline Enquiry Entry** | Click "+ Add Enquiry" on dashboard or enquiries page, fill details and submit | Saves walk-in record with `source = 'Offline'`, generates `MCI-ENQ-XXXX`, refreshes table and live counters without reload. |
-| **Offline Student Registration** | Click "+ Register Student" on dashboard, admissions or students page | Saves admission record with `source = 'Offline'` and automatically provisions enrolled student record `MCI-STU-XXXX`. |
-| **Idempotent Student Enrollment** | Change admission status to "Enrolled" multiple times | Idempotently links to existing student record without producing duplicates. |
-| **Student Roster Filtering** | Filter students by Source (Website vs Offline), Course, Branch, or Status | Table instantly updates via AJAX with matching enrolled student records. |
-| **Course Management** | Add or edit course fee / duration | Live course list on public `courses.php` reflects changes immediately. |
-| **Admin Logout** | Click "Logout" in admin header | Session destroyed, cookies cleared, protected pages reject access. |
+### Deploy to Netlify (Recommended)
+1. Drag and drop the project folder directly into the [Netlify Drop](https://app.netlify.com/drop) dashboard, OR connect your GitHub repository.
+2. Build command: *(leave empty)*
+3. Publish directory: `.` (root)
+4. Custom domain: Point your domain's DNS `A` / `CNAME` records to Netlify.
 
----
+### Deploy to Vercel
+1. Install Vercel CLI (`npm i -g vercel`) and run `vercel`, or import the GitHub repository in the Vercel dashboard.
+2. Framework Preset: **Other**.
+3. Output Directory: `.` (root).
 
-## 5. Security Implementations
+### Deploy to GitHub Pages
+1. In repository **Settings > Pages**, choose `Deploy from a branch`.
+2. Select branch `main` and folder `/ (root)`, then click **Save**.
 
-1. **Prepared Statements**: All database operations execute strictly through PDO prepared statements with bound parameters to eliminate SQL injection vulnerabilities.
-2. **Session Hardening**: Sessions use `session_regenerate_id(true)` upon successful authentication, preventing session fixation. Cookies have `HttpOnly=true` and `SameSite=Lax`.
-3. **Password Security**: Passwords are saved exclusively as salted hashes using PHP's native `password_hash($pass, PASSWORD_DEFAULT)`.
-4. **CSRF Tokens**: Form submissions and state-changing administrative requests validate unique cryptographically secure session tokens.
-5. **Rate Limiting**: Administrator login tracks consecutive failed attempts per account and enforces temporary lockouts after 5 failed trials.
-6. **File Upload Security**: Gallery uploads enforce server-side MIME verification using `finfo`, restrict extensions to JPG, PNG, WEBP and SVG, limit sizes to 5MB, and generate randomized non-executable filenames.
-7. **XSS Protection**: Dynamic user-supplied outputs are sanitized using `htmlspecialchars(..., ENT_QUOTES, 'UTF-8')`.
+### Deploy to cPanel / Shared Hosting
+1. Compress the project files into a `.zip` file.
+2. In cPanel **File Manager**, navigate to `public_html/`.
+3. Upload and extract the files directly into `public_html/`.
 
 ---
 
-## 6. Troubleshooting Common XAMPP Issues
+## 6. Form Handling & Formspree Email Integration
 
-- **Apache Port Conflict (Port 80 / 443 already in use)**:
-  - If Skype, IIS, or VMware occupy port 80:
-  - In XAMPP Control Panel, click **Config** next to Apache > `httpd.conf`.
-  - Change `Listen 80` to `Listen 8080` and `ServerName localhost:8080`.
-  - Access the site via `http://localhost:8080/master-computer/`.
-- **MySQL Connection Error ("Access denied for user 'root'@'localhost'")**:
-  - Open `config/database.php` and verify the password matches your local MySQL root password.
-- **Missing PDO / MySQL Extension**:
-  - In XAMPP Control Panel, click **Config** next to Apache > `php.ini`.
-  - Verify `extension=pdo_mysql` and `extension=fileinfo` are uncommented (no leading semicolon).
-- **Broken Asset Links or Subdirectory Issues**:
-  - `config/app.php` includes dynamic base URL detection that automatically resolves paths regardless of whether the site runs on root, `/master-computer/`, or a custom port.
+All forms (Course Enquiry modal, Admission Application, and Contact Us) are handled in `js/forms.js` using AJAX `fetch` with the official Formspree endpoint:
+```javascript
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xdeelbla';
+```
+- **Centralized Endpoint**: Submissions from the Homepage Modal, Admission Enquiry form, and Contact Us form route directly to Formspree email inbox.
+- **Client-Side Validation**: Ensures 10-digit Indian phone numbers (`^[6-9]\d{9}$`), valid email formats, and required field completion before submitting.
+- **Submission State Protection**: Disables submit buttons during processing to prevent duplicate submissions, and provides clear status messaging.
+- **Independent WhatsApp Alternative**: Direct WhatsApp connection (`+91 9696525287`) remains available as an alternative communication channel across contact cards, footers, and direct inquiry buttons.
 
 ---
 
-## 7. License & Credits
+## 7. NGO Affiliation — Yuva Prerna Foundation
 
-- **Institute**: Master Computer Institute, Nawabganj, UP (271303), India.
+Master Computer Institute is officially affiliated with **Yuva Prerna Foundation** (Official NGO website: [https://www.ypfngo.in/](https://www.ypfngo.in/)).
+Through this partnership, we support education, youth skill development, and community empowerment opportunities across Nawabganj and surrounding rural regions.
+
+---
+
+## 8. License & Credits
+
+- **Institute**: Master Computer Institute, Nawabganj, Uttar Pradesh (PIN 271303), India.
 - **Director**: Shivam Pandey
-- **Technologies**: PHP 8, MySQL/MariaDB, Vanilla JavaScript, CSS3, Bootstrap Icons, Swiper.js.
+- **Technologies**: HTML5, CSS3, JavaScript (ES6), Bootstrap Icons, Swiper.js.
