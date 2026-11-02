@@ -281,6 +281,13 @@ async function handleStaticContact(e) {
     return;
   }
 
+  const cleanMobile = mobile.replace(/[^0-9]/g, '');
+  if (!/^[6-9]\d{9}$/.test(cleanMobile)) {
+    if (msg) showFormMsg(msg, 'Please enter a valid 10-digit mobile number.', 'error');
+    form.contactMobile?.focus();
+    return;
+  }
+
   if (!message || message.length < 10) {
     if (msg) showFormMsg(msg, 'Please enter a message of at least 10 characters.', 'error');
     form.contactMessage?.focus();
@@ -294,8 +301,6 @@ async function handleStaticContact(e) {
     btn.textContent = 'Sending Message...';
   }
   if (msg) msg.style.display = 'none';
-
-  const cleanMobile = mobile.replace(/[^0-9]/g, '');
 
   const payload = {
     _subject: `Contact Inquiry: ${subject || 'New Message'} — Master Computer Institute`,
