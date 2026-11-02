@@ -24,18 +24,65 @@ document.addEventListener('DOMContentLoaded', function () {
   const toggle = document.querySelector('.mobile-toggle');
   const menu = document.querySelector('.nav-menu');
   const heroCard = document.querySelector('.hero-card');
+  if (menu && !menu.querySelector('.nav-quick-links')) {
+    const quickLinks = [
+      {
+        href: 'https://mastercomputerinstitute.blogspot.com',
+        icon: 'bi-globe',
+        label: 'Blog',
+      },
+      {
+        href: 'https://www.instagram.com/master.computer1/',
+        icon: 'bi-instagram',
+        label: 'Instagram',
+      },
+      {
+        href: 'https://www.ypfngo.in/',
+        icon: 'bi-patch-check-fill',
+        label: 'Yuva Foundation',
+      },
+    ];
+    const quickLinksItem = document.createElement('li');
+    quickLinksItem.className = 'nav-quick-links';
+    quickLinksItem.innerHTML = `
+      <span class="nav-quick-links-title">Quick Links</span>
+      <ul class="nav-quick-links-list">
+        ${quickLinks.map((link) => `
+          <li>
+            <a href="${link.href}" target="_blank" rel="noopener noreferrer">
+              <i class="bi ${link.icon}" aria-hidden="true"></i>
+              <span>${link.label}</span>
+            </a>
+          </li>
+        `).join('')}
+      </ul>
+    `;
+    menu.appendChild(quickLinksItem);
+  }
+  if (toggle && menu) {
+    if (!menu.id) menu.id = 'main-navigation-menu';
+    toggle.setAttribute('aria-controls', menu.id);
+  }
   const closeMenu = () => {
     if (!menu) return;
     menu.classList.remove('is-open');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    if (toggle) toggle.querySelector('i')?.classList.replace('bi-x-lg', 'bi-list');
   };
   if (toggle && menu) {
     toggle.addEventListener('click', () => {
-      menu.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', menu.classList.contains('is-open'));
+      const isOpen = menu.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      toggle.querySelector('i')?.classList.replace(isOpen ? 'bi-list' : 'bi-x-lg', isOpen ? 'bi-x-lg' : 'bi-list');
     });
     menu.addEventListener('click', (event) => {
       if (event.target.closest('a')) closeMenu();
+    });
+    document.addEventListener('click', (event) => {
+      if (menu.classList.contains('is-open') && !event.target.closest('.navbar')) closeMenu();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenu();
     });
   }
 
