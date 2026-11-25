@@ -1417,6 +1417,23 @@ textarea {
   color: rgba(255, 255, 255, 0.7);
 }
 
+.footer-credit {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-credit a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.footer-credit a:hover {
+  color: var(--secondary, #ff6600);
+}
+
 .socials {
   display: flex;
   align-items: center;
